@@ -5,8 +5,8 @@ hl.bind("CTRL + ALT + T", hl.dsp.exec_cmd(options.terminal))
 
 -- Common desktop shortcuts
 local closeWindowBind = hl.bind("ALT + F4", hl.dsp.window.close())
-local altTab = "command -v hyprswitch >/dev/null 2>&1 && hyprswitch gui --mod-key alt --key tab || hyprctl dispatch focuscurrentorlast"
-local reverseAltTab = "command -v hyprswitch >/dev/null 2>&1 && hyprswitch gui --mod-key alt --key tab --reverse-key=mod=shift || hyprctl dispatch focuscurrentorlast"
+local altTab = "command -v hyprswitch >/dev/null 2>&1 && hyprswitch gui --mod-key ALT --key TAB || hyprctl dispatch focuscurrentorlast"
+local reverseAltTab = "command -v hyprswitch >/dev/null 2>&1 && hyprswitch gui --mod-key ALT --key TAB --reverse-key=mod=SHIFT || hyprctl dispatch focuscurrentorlast"
 hl.bind("ALT + TAB", hl.dsp.exec_cmd(altTab))
 hl.bind("ALT + SHIFT + TAB", hl.dsp.exec_cmd(reverseAltTab))
 local powerMenu = "choice=$(printf 'Lock\\nLogout\\nSuspend\\nReboot\\nShutdown' | wofi --dmenu --prompt 'Power'); case \"$choice\" in Lock) hyprlock ;; Logout) hyprctl dispatch exit ;; Suspend) systemctl suspend ;; Reboot) systemctl reboot ;; Shutdown) systemctl poweroff ;; esac"
