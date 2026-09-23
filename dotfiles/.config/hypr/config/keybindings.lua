@@ -5,12 +5,27 @@ hl.bind("CTRL + ALT + T", hl.dsp.exec_cmd(options.terminal))
 
 -- Common desktop shortcuts
 local closeWindowBind = hl.bind("ALT + F4", hl.dsp.window.close())
-hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
+local altTab = "command -v hyprswitch >/dev/null 2>&1 && hyprswitch gui --mod-key alt --key tab || hyprctl dispatch focuscurrentorlast"
+local reverseAltTab = "command -v hyprswitch >/dev/null 2>&1 && hyprswitch gui --mod-key alt --key tab --reverse-key=mod=shift || hyprctl dispatch focuscurrentorlast"
+hl.bind("ALT + TAB", hl.dsp.exec_cmd(altTab))
+hl.bind("ALT + SHIFT + TAB", hl.dsp.exec_cmd(reverseAltTab))
+local powerMenu = "choice=$(printf 'Lock\\nLogout\\nSuspend\\nReboot\\nShutdown' | wofi --dmenu --prompt 'Power'); case \"$choice\" in Lock) hyprlock ;; Logout) hyprctl dispatch exit ;; Suspend) systemctl suspend ;; Reboot) systemctl reboot ;; Shutdown) systemctl poweroff ;; esac"
+hl.bind(mainMod .. " + M", hl.dsp.exec_cmd(powerMenu))
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(options.fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(options.menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
+
+local screenshotDir = "$HOME/Pictures/Screenshots"
+local screenshotName = "$(date +%Y-%m-%d_%H-%M-%S).png"
+local screenshotRegion = 'mkdir -p "' .. screenshotDir .. '" && grim -g "$(slurp)" - | tee "' .. screenshotDir .. '/' .. screenshotName .. '" | wl-copy'
+local screenshotOutput = 'mkdir -p "' .. screenshotDir .. '" && grim - | tee "' .. screenshotDir .. '/' .. screenshotName .. '" | wl-copy'
+hl.bind("Print", hl.dsp.exec_cmd(screenshotRegion))
+hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd(screenshotRegion))
+hl.bind("SUPER + Print", hl.dsp.exec_cmd(screenshotOutput))
+hl.bind("SUPER + SHIFT + V", hl.dsp.exec_cmd("cliphist list | wofi --dmenu --prompt 'Clipboard' | cliphist decode | wl-copy"))
 
 hl.bind(mainMod .. " + left",  hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
@@ -35,6 +50,8 @@ hl.bind(mainMod .. " + SHIFT + grave", hl.dsp.window.move({ workspace = "special
 
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
 hl.bind(mainMod .. " + mouse_up",   hl.dsp.focus({ workspace = "e-1" }))
+hl.bind("CTRL + ALT + left",  hl.dsp.focus({ workspace = "e-1" }))
+hl.bind("CTRL + ALT + right", hl.dsp.focus({ workspace = "e+1" }))
 
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
