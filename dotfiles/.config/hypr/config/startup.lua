@@ -11,6 +11,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("wl-paste --type text --watch cliphist store")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
     -- hyprswitch v5 requires its daemon to be initialized before `gui` is used.
-    -- `hl.exec_cmd` already starts commands asynchronously, so no trailing `&` is needed.
-    hl.exec_cmd("hyprswitch init --show-title --size-factor 6")
+    -- Keep the daemon independent from the terminal that launched Hyprland.
+    -- Redirect output so closing that terminal cannot stop the daemon or flood its log.
+    hl.exec_cmd("nohup hyprswitch init --show-title --size-factor 6 >/dev/null 2>&1 &")
 end)
