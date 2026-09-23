@@ -1,0 +1,17 @@
+# Local AI assistant configuration and worktrees
+/.agents/
+/.claude/
+/.codex/
+
+# Local editor settings
+/.vscode/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor backup and swap files
+*~
+*.swp
+*.swo
