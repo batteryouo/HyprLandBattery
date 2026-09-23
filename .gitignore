@@ -6,6 +6,10 @@
 # Local editor settings
 /.vscode/
 
+# Hyprland image assets (keep the repository wallpaper)
+/dotfiles/.config/hypr/images/*
+!/dotfiles/.config/hypr/images/CuteAru.png
+
 # Operating system files
 .DS_Store
 Thumbs.db
