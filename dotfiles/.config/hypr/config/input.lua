@@ -12,7 +12,7 @@ hl.config({
         scroll_factor = 0.5,
         touchpad = {
             natural_scroll = true,
-            scroll_factor = 0.15,
+            scroll_factor = 0.2,
         },
     },
 })
