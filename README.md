@@ -34,7 +34,8 @@ dotfiles/.config/
 - **Theme**: Catppuccin Mocha color scheme throughout, with a blue-green gradient
   on active window borders and a floating, rounded-pill Waybar.
 - **Waybar modules**: workspaces, active window title, clock, volume, network,
-  battery, and system tray.
+  battery, system tray, and a power button (opens the same power menu as
+  `Super + M`).
 - **Startup apps**: `kitty`, `nm-applet`, `waybar`, `hyprpaper`, `mako`, the
   polkit-kde authentication agent, `hyprpm reload`, and `cliphist` watchers for
   both text and image clipboard history. The `hyprswitch` daemon is also

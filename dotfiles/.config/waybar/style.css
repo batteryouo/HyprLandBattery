@@ -2,7 +2,7 @@
   border: none;
   border-radius: 0;
   font-family: "JetBrainsMono Nerd Font", "Font Awesome 6 Free", sans-serif;
-  font-size: 13px;
+  font-size: 12px;
   min-height: 0;
 }
 
@@ -17,22 +17,23 @@ window#waybar {
 #pulseaudio,
 #network,
 #battery,
-#tray {
+#tray,
+#custom-power {
   background: rgba(30, 30, 46, 0.92);
   border: 1px solid rgba(137, 180, 250, 0.18);
-  border-radius: 12px;
-  min-height: 30px;
+  border-radius: 10px;
+  min-height: 22px;
 }
 
 #workspaces {
-  padding: 0 5px;
+  padding: 0 4px;
 }
 
 #workspaces button {
   color: #6c7086;
-  padding: 0 8px;
-  margin: 4px 2px;
-  border-radius: 8px;
+  padding: 0 6px;
+  margin: 3px 2px;
+  border-radius: 6px;
   transition: all 0.2s ease;
 }
 
@@ -53,19 +54,19 @@ window#waybar {
 
 #window {
   color: #bac2de;
-  padding: 0 14px;
+  padding: 0 10px;
 }
 
 #clock {
   color: #89b4fa;
   font-weight: bold;
-  padding: 0 16px;
+  padding: 0 12px;
 }
 
 #pulseaudio,
 #network,
 #battery {
-  padding: 0 12px;
+  padding: 0 9px;
 }
 
 #pulseaudio { color: #89dceb; }
@@ -76,11 +77,22 @@ window#waybar {
 #battery.charging { color: #a6e3a1; }
 
 #tray {
-  padding: 0 11px;
+  padding: 0 8px;
 }
 
 #tray > .passive { -gtk-icon-effect: dim; }
 #tray > .needs-attention { -gtk-icon-effect: highlight; }
+
+#custom-power {
+  color: #f38ba8;
+  padding: 0 10px;
+  transition: all 0.2s ease;
+}
+
+#custom-power:hover {
+  background: #f38ba8;
+  color: #1e1e2e;
+}
 
 tooltip {
   background: #1e1e2e;

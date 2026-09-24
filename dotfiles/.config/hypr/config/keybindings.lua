@@ -9,8 +9,7 @@ local altTab = "hyprswitch gui --mod-key ALT --key TAB"
 local reverseAltTab = "hyprswitch gui --mod-key ALT --key TAB --reverse-key=mod=SHIFT"
 hl.bind("ALT + TAB", hl.dsp.exec_cmd(altTab))
 hl.bind("ALT + SHIFT + TAB", hl.dsp.exec_cmd(reverseAltTab))
-local powerMenu = "choice=$(printf 'Lock\\nLogout\\nSuspend\\nReboot\\nShutdown' | wofi --dmenu --prompt 'Power'); case \"$choice\" in Lock) hyprlock ;; Logout) hyprctl dispatch exit ;; Suspend) systemctl suspend ;; Reboot) systemctl reboot ;; Shutdown) systemctl poweroff ;; esac"
-hl.bind(mainMod .. " + M", hl.dsp.exec_cmd(powerMenu))
+hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("~/.config/hypr/scripts/powermenu.sh"))
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(options.fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
