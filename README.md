@@ -23,6 +23,7 @@ dotfiles/.config/
 │   │   └── rules.lua         # Window rules
 │   ├── plugins/
 │   │   └── hyprbars.lua      # Window title bar plugin (close/maximize/float buttons)
+│   ├── hyprlock.conf         # Lock screen appearance
 │   ├── hyprpaper.conf        # Wallpaper configuration
 │   └── images/CuteAru.png    # Wallpaper image
 ├── waybar/                   # Top status bar (config.jsonc + style.css)
@@ -113,9 +114,10 @@ hyprpm enable hyprbars
 
 ## Notes
 
-- There is no `hyprlock.conf` in this repo, so `hyprlock` uses its built-in
-  default appearance. Add one under `dotfiles/.config/hypr/` if you want to
-  customize the lock screen.
+- `dotfiles/.config/hypr/hyprlock.conf` themes the lock screen (Catppuccin
+  Mocha colors, the repo wallpaper, clock, date, and battery percentage). It
+  reads battery capacity from `/sys/class/power_supply/BAT0`, so update that
+  path if your hardware exposes a different battery name.
 - `dotfiles/.config/hypr/config/input.lua` includes a per-device override for
   a device named `epic-mouse-v1` — this is a placeholder from the Hyprland
   example config and has no effect unless you rename it to match an actual
