@@ -3,11 +3,11 @@ hl.config({
         gaps_in  = 5,
         gaps_out = 20,
 
-        border_size = 1,
+        border_size = 2,
 
         col = {
-            active_border   = { colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 },
-            inactive_border = "rgba(595959aa)",
+            active_border   = "rgba(89dcebcc)",
+            inactive_border = "rgba(45475a88)",
         },
 
         resize_on_border = true,

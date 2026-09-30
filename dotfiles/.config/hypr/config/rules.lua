@@ -27,5 +27,5 @@ hl.window_rule({
 hl.window_rule({
     name  = "terminal-transparency",
     match = { class = "^kitty$" },
-    opacity = "0.88 0.8",
+    opacity = "0.85 0.6",
 })
