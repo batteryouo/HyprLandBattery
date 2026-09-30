@@ -19,7 +19,6 @@ TARGET_DIR="$HOME/.config"
 CONFIGS=(hypr waybar mako fastfetch)
 
 # Packages expected to be installed on the system (Arch Linux package names).
-# hyprbars is a Hyprland plugin managed separately via hyprpm, not pacman.
 REQUIRED_PACKAGES=(
   hyprland
   hyprpaper
@@ -112,8 +111,6 @@ main() {
   done
 
   log "Done."
-  log "Note: the hyprbars plugin is loaded via hyprpm and is not installed by this script."
-  log "Enable it with: hyprpm add https://github.com/hyprwm/hyprland-plugins && hyprpm enable hyprbars"
 }
 
 main "$@"

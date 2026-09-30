@@ -21,8 +21,6 @@ dotfiles/.config/
 │   │   ├── input.lua         # Keyboard, mouse, touchpad, gestures
 │   │   ├── keybindings.lua   # Keybindings
 │   │   └── rules.lua         # Window rules
-│   ├── plugins/
-│   │   └── hyprbars.lua      # Window title bar plugin (close/maximize/float buttons)
 │   ├── hyprlock.conf         # Lock screen appearance
 │   ├── hyprpaper.conf        # Wallpaper configuration
 │   └── images/CuteAru.png    # Wallpaper image
@@ -87,8 +85,8 @@ This setup targets Arch Linux. The following packages are expected:
 `network-manager-applet`, `polkit-kde-agent`, and the
 `ttf-jetbrains-mono-nerd` font.
 
-Two things do not come from `pacman`: the `hyprbars` plugin (installed through
-`hyprpm`) and the `sddm-astronaut-theme` login screen (from the AUR).
+The `sddm-astronaut-theme` login screen is the one thing that does not come
+from `pacman`; it is installed from the AUR.
 
 ## Installation
 
@@ -106,11 +104,7 @@ git clone <this-repo-url>
 cd HyprLandBattery
 ./install.sh
 
-# 3. Window title bars
-hyprpm add https://github.com/hyprwm/hyprland-plugins
-hyprpm enable hyprbars
-
-# 4. Login screen (see dotfiles/sddm/README.md for details)
+# 3. Login screen (see dotfiles/sddm/README.md for details)
 yay -S sddm-astronaut-theme
 cd dotfiles/sddm
 sudo cp etc/sddm.conf.d/*.conf /etc/sddm.conf.d/
@@ -125,7 +119,7 @@ sudo sed -i 's|^ConfigFile=.*|ConfigFile=Themes/battery.conf|' \
   /usr/share/sddm/themes/sddm-astronaut-theme/metadata.desktop
 cd ../..
 
-# 5. Start the display manager on boot, then reboot
+# 4. Start the display manager on boot, then reboot
 sudo systemctl enable sddm
 ```
 
