@@ -133,11 +133,6 @@ and symlinks `dotfiles/.config/{hypr,waybar,mako}` into `~/.config/`, backing
 up any existing directory first (as `<name>.backup-<timestamp>`). Run
 `./install.sh --check` to check packages without touching `~/.config`.
 
-Two values in `dotfiles/sddm/themes/sddm-astronaut-theme/Components/StatusInfo.qml`
-are specific to this laptop and need editing on other hardware: the battery
-(`BAT0`) and the wireless interface (`wlp0s20f3`). Check yours with
-`ls /sys/class/power_supply` and `ip link`.
-
 ## Notes
 
 - `dotfiles/.config/hypr/hyprlock.conf` themes the lock screen (Catppuccin

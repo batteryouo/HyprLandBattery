@@ -51,9 +51,13 @@ QML changes on top of the stock theme:
   or picked from the dropdown, and falls back to the last-logged-in user.
 - **`Components/StatusInfo.qml`** (new) — battery percentage and network state
   in the top-right corner. The greeter has no session, so there is no upower or
-  NetworkManager to ask; it reads sysfs directly, which is why
-  `QML_XHR_ALLOW_FILE_READ=1` is needed. Both the battery (`BAT0`) and the
-  interface name (`wlp0s20f3`) are hardcoded to this laptop.
+  NetworkManager to ask; it reads sysfs and procfs directly, which is why
+  `QML_XHR_ALLOW_FILE_READ=1` is needed. Nothing is tied to this machine: the
+  network state comes from the default route in `/proc/net/route` (whose
+  interface name also picks the Wi-Fi or Ethernet icon), and the battery is
+  found by probing the usual `/sys/class/power_supply` names, since
+  `XMLHttpRequest` cannot list a directory. The battery line hides itself when
+  no battery is found, so a desktop shows only the network state.
 - **`Components/Clock.qml`** — gained a `baseSize` property so the corner clock
   can be scaled independently of the global font size.
 - **`Components/LoginForm.qml`** — clock hidden (it is rendered standalone from
