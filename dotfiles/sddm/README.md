@@ -2,29 +2,21 @@
 
 Customizations on top of the AUR package `sddm-astronaut-theme`. Unlike the
 rest of `dotfiles/`, **nothing here is symlinked by `install.sh`** — SDDM reads
-from system directories, so these files are copies kept for backup and have to
-be installed manually.
+from system directories, so `apply.sh` copies these files into place instead.
 
-A `sddm-astronaut-theme` package upgrade overwrites the QML files, so this
-directory is also what you re-apply from after `pacman -Syu`.
+A `sddm-astronaut-theme` upgrade puts the stock QML back, so re-run `apply.sh`
+after `pacman -Syu` touches that package.
 
 ## Install
 
 ```sh
-sudo pacman -S --needed sddm
 yay -S sddm-astronaut-theme
-
-cd dotfiles/sddm
-sudo cp etc/sddm.conf.d/*.conf                  /etc/sddm.conf.d/
-sudo cp faces/example.face.icon                 "/usr/share/sddm/faces/$USER.face.icon"
-sudo cp themes/sddm-astronaut-theme/Main.qml    /usr/share/sddm/themes/sddm-astronaut-theme/
-sudo cp themes/sddm-astronaut-theme/Components/*.qml \
-                                                /usr/share/sddm/themes/sddm-astronaut-theme/Components/
-sudo cp themes/sddm-astronaut-theme/Themes/battery.conf \
-                                                /usr/share/sddm/themes/sddm-astronaut-theme/Themes/
-sudo sed -i 's|^ConfigFile=.*|ConfigFile=Themes/battery.conf|' \
-  /usr/share/sddm/themes/sddm-astronaut-theme/metadata.desktop
+dotfiles/sddm/apply.sh
 ```
+
+`apply.sh` re-runs itself through sudo and is safe to repeat: it installs the
+`/etc/sddm.conf.d` snippets and the theme files, then points the theme's
+`metadata.desktop` at `Themes/battery.conf`.
 
 Preview without logging out:
 
@@ -72,23 +64,22 @@ QML changes on top of the stock theme:
 SDDM looks up `/usr/share/sddm/faces/<username>.face.icon`, which is a plain
 PNG despite the extension. A user without one gets SDDM's built-in silhouette.
 
-`faces/example.face.icon` is only a neutral placeholder — the real avatar is a
-personal picture that is deliberately not tracked here, so it survives being
-swapped out without dirtying the repo. To use your own, crop a square, bake a
-round alpha channel into it, and install it under your username:
+To set or change yours:
 
 ```sh
-magick <picture> \
-  -resize 512x512^ -gravity center -extent 512x512 \
-  \( -size 512x512 xc:none -fill white -draw "circle 256,256 256,0" \) \
-  -alpha set -compose DstIn -composite \
-  png:/tmp/face.png
-sudo cp /tmp/face.png "/usr/share/sddm/faces/$USER.face.icon"
+dotfiles/sddm/apply.sh --avatar ~/Pictures/whatever.png
 ```
 
-The round shape has to be baked into the alpha channel because Qt6
-`MultiEffect` mask rendering drew nothing at all in this greeter build, so
-`Avatar.qml` displays the file as-is with no masking.
+That center-crops the image to a square, bakes a round alpha channel into it
+and installs it as `<username>.face.icon`. Add `--user NAME` for a different
+account. The greeter runs as the `sddm` user and cannot read into a 700 home
+directory, which is why the picture has to live in `/usr/share/sddm/faces`
+rather than somewhere like `~/.face.icon`.
 
-To crop a specific region instead of the center, replace the resize/extent
-pair with `-crop <w>x<h>+<x>+<y> +repage -resize 512x512`.
+`faces/example.face.icon` is only a neutral placeholder. The real avatar is a
+personal picture that is deliberately not tracked here, so swapping it out
+never dirties the repo.
+
+The round shape is baked into the alpha channel because Qt6 `MultiEffect` mask
+rendering drew nothing at all in this greeter build, so `Avatar.qml` displays
+the file as-is with no masking.

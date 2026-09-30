@@ -106,27 +106,21 @@ cd HyprLandBattery
 
 # 3. Login screen (see dotfiles/sddm/README.md for details)
 yay -S sddm-astronaut-theme
-cd dotfiles/sddm
-sudo cp etc/sddm.conf.d/*.conf /etc/sddm.conf.d/
-sudo cp faces/example.face.icon "/usr/share/sddm/faces/$USER.face.icon"
-sudo cp themes/sddm-astronaut-theme/Main.qml \
-        /usr/share/sddm/themes/sddm-astronaut-theme/
-sudo cp themes/sddm-astronaut-theme/Components/*.qml \
-        /usr/share/sddm/themes/sddm-astronaut-theme/Components/
-sudo cp themes/sddm-astronaut-theme/Themes/battery.conf \
-        /usr/share/sddm/themes/sddm-astronaut-theme/Themes/
-sudo sed -i 's|^ConfigFile=.*|ConfigFile=Themes/battery.conf|' \
-  /usr/share/sddm/themes/sddm-astronaut-theme/metadata.desktop
-cd ../..
+dotfiles/sddm/apply.sh --avatar ~/Pictures/whatever.png
 
 # 4. Start the display manager on boot, then reboot
 sudo systemctl enable sddm
 ```
 
-`install.sh` only handles step 2: it checks for missing packages via `pacman`
-and symlinks `dotfiles/.config/{hypr,waybar,mako,fastfetch}` into `~/.config/`, backing
-up any existing directory first (as `<name>.backup-<timestamp>`). Run
+`install.sh` handles step 2: it checks for missing packages via `pacman` and
+symlinks `dotfiles/.config/{hypr,waybar,mako,fastfetch}` into `~/.config/`,
+backing up any existing directory first (as `<name>.backup-<timestamp>`). Run
 `./install.sh --check` to check packages without touching `~/.config`.
+
+Step 3 is `dotfiles/sddm/apply.sh`, which needs root and so re-runs itself
+through sudo. Run it again after an upgrade replaces the theme package's QML,
+and with `--avatar` whenever you want a different login picture; the argument
+is optional, and without it SDDM shows its own silhouette.
 
 ## Notes
 
