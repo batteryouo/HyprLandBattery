@@ -4,9 +4,6 @@ Customizations on top of the AUR package `sddm-astronaut-theme`. Unlike the
 rest of `dotfiles/`, **nothing here is symlinked by `install.sh`** — SDDM reads
 from system directories, so `apply.sh` copies these files into place instead.
 
-A `sddm-astronaut-theme` upgrade puts the stock QML back, so re-run `apply.sh`
-after `pacman -Syu` touches that package.
-
 ## Install
 
 ```sh
@@ -16,7 +13,25 @@ dotfiles/sddm/apply.sh
 
 `apply.sh` re-runs itself through sudo and is safe to repeat: it installs the
 `/etc/sddm.conf.d` snippets and the theme files, then points the theme's
-`metadata.desktop` at `Themes/battery.conf`.
+`metadata.desktop` at `Themes/battery.conf`. Re-run it after editing anything
+in this directory.
+
+## Surviving upgrades
+
+An upgrade of `sddm-astronaut-theme` only reverts the files the package owns
+and this repo modifies — `Main.qml`, `Components/{Clock,Input,LoginForm}.qml`
+and the `ConfigFile` line in `metadata.desktop`. Files added here
+(`Avatar.qml`, `StatusInfo.qml`, `Themes/battery.conf`) and the avatar belong
+to no package, so pacman leaves them alone.
+
+`apply.sh` installs a pacman hook that restores those files automatically, so
+an upgrade needs no follow-up. The hook runs as root and therefore must not
+execute anything out of a checkout the user can write to: `apply.sh` keeps a
+root-owned copy of itself and the theme files in
+`/usr/local/share/hyprlandbattery/sddm`, refreshed on every run, and the hook
+executes that copy instead of this one.
+
+To undo the automation: `sudo rm /etc/pacman.d/hooks/95-sddm-astronaut-theme-overlay.hook`.
 
 Preview without logging out:
 

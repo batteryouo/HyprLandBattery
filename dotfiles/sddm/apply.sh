@@ -10,13 +10,19 @@
 #
 # Re-runs itself through sudo, since everything lands in /usr/share and /etc.
 # Safe to re-run, which is the point: a sddm-astronaut-theme upgrade puts the
-# stock QML back, and this restores it.
+# stock QML back, and this restores it. A pacman hook installed here does that
+# automatically, so the manual run is only needed after editing the repo.
 
 set -euo pipefail
 
 SRC_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 THEME_DIR="/usr/share/sddm/themes/sddm-astronaut-theme"
 FACES_DIR="/usr/share/sddm/faces"
+SDDM_CONF_DIR="/etc/sddm.conf.d"
+# The pacman hook runs as root, so it must not execute anything out of a
+# user-writable checkout; it runs this root-owned copy instead.
+SNAPSHOT_DIR="/usr/local/share/hyprlandbattery/sddm"
+HOOK_PATH="/etc/pacman.d/hooks/95-sddm-astronaut-theme-overlay.hook"
 AVATAR_SIZE=512
 
 log() { printf '==> %s\n' "$1"; }
@@ -79,8 +85,8 @@ install_theme() {
   [ -d "$THEME_DIR" ] || die "$THEME_DIR not found; install it with: yay -S sddm-astronaut-theme"
 
   log "Installing SDDM configuration..."
-  install -d /etc/sddm.conf.d
-  install -m 644 "$SRC_DIR"/etc/sddm.conf.d/*.conf /etc/sddm.conf.d/
+  install -d "$SDDM_CONF_DIR"
+  install -m 644 "$SRC_DIR"/etc/sddm.conf.d/*.conf "$SDDM_CONF_DIR/"
 
   log "Installing theme files..."
   install -m 644 "$SRC_DIR/themes/sddm-astronaut-theme/Main.qml" "$THEME_DIR/"
@@ -89,6 +95,32 @@ install_theme() {
 
   log "Selecting the battery.conf variant..."
   sed -i 's|^ConfigFile=.*|ConfigFile=Themes/battery.conf|' "$THEME_DIR/metadata.desktop"
+}
+
+install_snapshot() {
+  # Nothing to copy when the hook is re-running us from the snapshot itself.
+  [ "$SRC_DIR" != "$SNAPSHOT_DIR" ] || return 0
+
+  log "Refreshing the root-owned copy in $SNAPSHOT_DIR..."
+  install -d "$SNAPSHOT_DIR/etc/sddm.conf.d"
+  install -d "$SNAPSHOT_DIR/etc/pacman.d/hooks"
+  install -d "$SNAPSHOT_DIR/themes/sddm-astronaut-theme/Components"
+  install -d "$SNAPSHOT_DIR/themes/sddm-astronaut-theme/Themes"
+  install -m 755 "$SRC_DIR/apply.sh" "$SNAPSHOT_DIR/"
+  install -m 644 "$SRC_DIR"/etc/sddm.conf.d/*.conf "$SNAPSHOT_DIR/etc/sddm.conf.d/"
+  install -m 644 "$SRC_DIR"/etc/pacman.d/hooks/*.hook "$SNAPSHOT_DIR/etc/pacman.d/hooks/"
+  install -m 644 "$SRC_DIR/themes/sddm-astronaut-theme/Main.qml" \
+    "$SNAPSHOT_DIR/themes/sddm-astronaut-theme/"
+  install -m 644 "$SRC_DIR"/themes/sddm-astronaut-theme/Components/*.qml \
+    "$SNAPSHOT_DIR/themes/sddm-astronaut-theme/Components/"
+  install -m 644 "$SRC_DIR/themes/sddm-astronaut-theme/Themes/battery.conf" \
+    "$SNAPSHOT_DIR/themes/sddm-astronaut-theme/Themes/"
+}
+
+install_hook() {
+  log "Installing the pacman hook..."
+  install -d "$(dirname "$HOOK_PATH")"
+  install -m 644 "$SRC_DIR/etc/pacman.d/hooks/$(basename "$HOOK_PATH")" "$HOOK_PATH"
 }
 
 install_avatar() {
@@ -119,6 +151,8 @@ main() {
   resolve_avatar
   elevate "$@"
   install_theme
+  install_snapshot
+  install_hook
   install_avatar
   log "Done. Preview without logging out:"
   log "  QML_XHR_ALLOW_FILE_READ=1 sddm-greeter-qt6 --test-mode --theme $THEME_DIR/"

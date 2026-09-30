@@ -118,9 +118,10 @@ backing up any existing directory first (as `<name>.backup-<timestamp>`). Run
 `./install.sh --check` to check packages without touching `~/.config`.
 
 Step 3 is `dotfiles/sddm/apply.sh`, which needs root and so re-runs itself
-through sudo. Run it again after an upgrade replaces the theme package's QML,
-and with `--avatar` whenever you want a different login picture; the argument
-is optional, and without it SDDM shows its own silhouette.
+through sudo. Pass `--avatar` whenever you want a different login picture; the
+argument is optional, and without it SDDM shows its own silhouette. The script
+also installs a pacman hook that re-applies the theme after a
+`sddm-astronaut-theme` upgrade, so upgrades need no follow-up.
 
 ## Notes
 

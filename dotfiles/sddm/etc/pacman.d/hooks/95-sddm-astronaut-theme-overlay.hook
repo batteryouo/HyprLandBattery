@@ -1,0 +1,10 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = sddm-astronaut-theme
+
+[Action]
+Description = Restoring local SDDM theme customizations...
+When = PostTransaction
+Exec = /usr/local/share/hyprlandbattery/sddm/apply.sh
