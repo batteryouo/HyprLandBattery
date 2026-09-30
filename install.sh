@@ -16,7 +16,7 @@ SOURCE_DIR="$REPO_DIR/dotfiles/.config"
 TARGET_DIR="$HOME/.config"
 
 # Top-level config directories/files this repo manages under ~/.config.
-CONFIGS=(hypr waybar mako)
+CONFIGS=(hypr waybar mako fastfetch)
 
 # Packages expected to be installed on the system (Arch Linux package names).
 # hyprbars is a Hyprland plugin managed separately via hyprpm, not pacman.
@@ -29,6 +29,7 @@ REQUIRED_PACKAGES=(
   sddm
   waybar
   mako
+  fastfetch
   wofi
   kitty
   thunar

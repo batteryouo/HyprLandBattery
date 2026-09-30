@@ -27,7 +27,8 @@ dotfiles/.config/
 │   ├── hyprpaper.conf        # Wallpaper configuration
 │   └── images/CuteAru.png    # Wallpaper image
 ├── waybar/                   # Top status bar (config.jsonc + style.css)
-└── mako/config                # Notification daemon config
+├── mako/config               # Notification daemon config
+└── fastfetch/                # System info readout (config.jsonc + logo/)
 
 dotfiles/sddm/                # SDDM login screen theme (installed manually)
 ```
@@ -81,8 +82,8 @@ dotfiles/sddm/                # SDDM login screen theme (installed manually)
 This setup targets Arch Linux. The following packages are expected:
 
 `hyprland`, `hyprpaper`, `hyprlock`, `hyprswitch`, `uwsm`, `sddm`, `waybar`,
-`mako`, `wofi`, `kitty`, `thunar`, `grim`, `slurp`, `wl-clipboard`, `cliphist`,
-`wireplumber`, `brightnessctl`, `playerctl`, `pavucontrol`,
+`mako`, `fastfetch`, `wofi`, `kitty`, `thunar`, `grim`, `slurp`,
+`wl-clipboard`, `cliphist`, `wireplumber`, `brightnessctl`, `playerctl`, `pavucontrol`,
 `network-manager-applet`, `polkit-kde-agent`, and the
 `ttf-jetbrains-mono-nerd` font.
 
@@ -96,11 +97,11 @@ Full setup on a fresh Arch machine:
 ```sh
 # 1. Packages
 sudo pacman -S --needed hyprland hyprpaper hyprlock hyprswitch uwsm sddm \
-  waybar mako wofi kitty thunar grim slurp wl-clipboard cliphist \
+  waybar mako fastfetch wofi kitty thunar grim slurp wl-clipboard cliphist \
   wireplumber brightnessctl playerctl pavucontrol network-manager-applet \
   polkit-kde-agent ttf-jetbrains-mono-nerd
 
-# 2. Dotfiles — symlinks hypr, waybar and mako into ~/.config
+# 2. Dotfiles — symlinks hypr, waybar, mako and fastfetch into ~/.config
 git clone <this-repo-url>
 cd HyprLandBattery
 ./install.sh
@@ -129,7 +130,7 @@ sudo systemctl enable sddm
 ```
 
 `install.sh` only handles step 2: it checks for missing packages via `pacman`
-and symlinks `dotfiles/.config/{hypr,waybar,mako}` into `~/.config/`, backing
+and symlinks `dotfiles/.config/{hypr,waybar,mako,fastfetch}` into `~/.config/`, backing
 up any existing directory first (as `<name>.backup-<timestamp>`). Run
 `./install.sh --check` to check packages without touching `~/.config`.
 
@@ -139,6 +140,10 @@ up any existing directory first (as `<name>.backup-<timestamp>`). Run
   Mocha colors, the repo wallpaper, clock, date, and battery percentage). It
   reads battery capacity from `/sys/class/power_supply/BAT0`, so update that
   path if your hardware exposes a different battery name.
+- The fastfetch logos under `dotfiles/.config/fastfetch/logo/` are personal
+  images and stay untracked; only the ASCII `cat.txt` is committed as an
+  example. After cloning, point `logo.source` in `config.jsonc` at `cat.txt`
+  or at an image of your own.
 - `dotfiles/sddm/` holds the login screen theme (a customized
   `sddm-astronaut-theme`). It is **not** symlinked by `install.sh` because SDDM
   reads from system directories — see `dotfiles/sddm/README.md` for how to

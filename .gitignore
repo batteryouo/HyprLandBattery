@@ -10,6 +10,10 @@
 /dotfiles/.config/hypr/images/*
 !/dotfiles/.config/hypr/images/CuteAru.png
 
+# fastfetch logos are personal images (keep the ASCII example)
+/dotfiles/.config/fastfetch/logo/*
+!/dotfiles/.config/fastfetch/logo/cat.txt
+
 # Operating system files
 .DS_Store
 Thumbs.db
