@@ -43,6 +43,10 @@ REQUIRED_PACKAGES=(
   network-manager-applet
   polkit-kde-agent
   ttf-jetbrains-mono-nerd
+  mousepad
+  loupe
+  mpv
+  evince
 )
 
 log()  { printf '==> %s\n' "$1"; }

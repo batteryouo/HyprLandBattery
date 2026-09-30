@@ -50,7 +50,7 @@ dotfiles/sddm/                # SDDM login screen theme (installed manually)
 | Keys | Action |
 | --- | --- |
 | `Ctrl + Alt + T` | Open terminal |
-| `Alt + F4` | Close focused window |
+| `Super + C` | Close focused window |
 | `Alt + Tab` / `Alt + Shift + Tab` | Switch windows (hyprswitch, forward/reverse) |
 | `Super + M` | Power menu (Lock / Logout / Suspend / Reboot / Shutdown via rofi) |
 | `Super + L` | Lock screen (hyprlock) |
@@ -83,8 +83,8 @@ This setup targets Arch Linux. The following packages are expected:
 `hyprland`, `hyprpaper`, `hyprlock`, `hyprswitch`, `uwsm`, `sddm`, `waybar`,
 `mako`, `fastfetch`, `rofi`, `kitty`, `thunar`, `grim`, `slurp`,
 `wl-clipboard`, `cliphist`, `wireplumber`, `brightnessctl`, `playerctl`, `pavucontrol`,
-`network-manager-applet`, `polkit-kde-agent`, and the
-`ttf-jetbrains-mono-nerd` font.
+`network-manager-applet`, `polkit-kde-agent`,
+`ttf-jetbrains-mono-nerd`, `mousepad`, `loupe`, `mpv`, and `evince`.
 
 The `sddm-astronaut-theme` login screen is the one thing that does not come
 from `pacman`; it is installed from the AUR.
@@ -98,7 +98,7 @@ Full setup on a fresh Arch machine:
 sudo pacman -S --needed hyprland hyprpaper hyprlock hyprswitch uwsm sddm \
   waybar mako fastfetch rofi kitty thunar grim slurp wl-clipboard cliphist \
   wireplumber brightnessctl playerctl pavucontrol network-manager-applet \
-  polkit-kde-agent ttf-jetbrains-mono-nerd
+  polkit-kde-agent ttf-jetbrains-mono-nerd mousepad loupe mpv evince
 
 # 2. Dotfiles — symlinks hypr, waybar, mako and fastfetch into ~/.config
 git clone <this-repo-url>

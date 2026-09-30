@@ -4,11 +4,12 @@ local mainMod = options.mainMod
 hl.bind("CTRL + ALT + T", hl.dsp.exec_cmd(options.terminal))
 
 -- Common desktop shortcuts
-local closeWindowBind = hl.bind("ALT + F4", hl.dsp.window.close())
 local altTab = "hyprswitch gui --mod-key ALT --key TAB"
 local reverseAltTab = "hyprswitch gui --mod-key ALT --key TAB --reverse-key=mod=SHIFT"
 hl.bind("ALT + TAB", hl.dsp.exec_cmd(altTab))
 hl.bind("ALT + SHIFT + TAB", hl.dsp.exec_cmd(reverseAltTab))
+
+hl.bind(mainMod .. " + C", hl.dsp.window.close())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("~/.config/hypr/scripts/powermenu.sh"))
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(options.fileManager))
