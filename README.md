@@ -28,6 +28,8 @@ dotfiles/.config/
 │   └── images/CuteAru.png    # Wallpaper image
 ├── waybar/                   # Top status bar (config.jsonc + style.css)
 └── mako/config                # Notification daemon config
+
+dotfiles/sddm/                # SDDM login screen theme (installed manually)
 ```
 
 ## Features
@@ -118,6 +120,10 @@ hyprpm enable hyprbars
   Mocha colors, the repo wallpaper, clock, date, and battery percentage). It
   reads battery capacity from `/sys/class/power_supply/BAT0`, so update that
   path if your hardware exposes a different battery name.
+- `dotfiles/sddm/` holds the login screen theme (a customized
+  `sddm-astronaut-theme`). It is **not** symlinked by `install.sh` because SDDM
+  reads from system directories — see `dotfiles/sddm/README.md` for how to
+  install it and how to re-apply it after a package upgrade.
 - `dotfiles/.config/hypr/config/input.lua` includes a per-device override for
   a device named `epic-mouse-v1` — this is a placeholder from the Hyprland
   example config and has no effect unless you rename it to match an actual
