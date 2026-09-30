@@ -25,6 +25,8 @@ REQUIRED_PACKAGES=(
   hyprpaper
   hyprlock
   hyprswitch
+  uwsm
+  sddm
   waybar
   mako
   wofi

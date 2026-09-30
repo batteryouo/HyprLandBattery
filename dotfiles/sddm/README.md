@@ -16,7 +16,7 @@ yay -S sddm-astronaut-theme
 
 cd dotfiles/sddm
 sudo cp etc/sddm.conf.d/*.conf                  /etc/sddm.conf.d/
-sudo cp faces/battery.face.icon                 /usr/share/sddm/faces/
+sudo cp faces/example.face.icon                 "/usr/share/sddm/faces/$USER.face.icon"
 sudo cp themes/sddm-astronaut-theme/Main.qml    /usr/share/sddm/themes/sddm-astronaut-theme/
 sudo cp themes/sddm-astronaut-theme/Components/*.qml \
                                                 /usr/share/sddm/themes/sddm-astronaut-theme/Components/
@@ -63,20 +63,28 @@ QML changes on top of the stock theme:
 - **`Main.qml`** — narrower login form, clock moved to the bottom-right corner
   at half size, status info anchored top-right.
 
-## Regenerating the avatar
+## Avatar
 
-`faces/battery.face.icon` is a PNG despite the extension, cropped from the
-wallpaper. The round shape is baked into the alpha channel because Qt6
-`MultiEffect` mask rendering drew nothing at all in this greeter build.
+SDDM looks up `/usr/share/sddm/faces/<username>.face.icon`, which is a plain
+PNG despite the extension. A user without one gets SDDM's built-in silhouette.
+
+`faces/example.face.icon` is only a neutral placeholder — the real avatar is a
+personal picture that is deliberately not tracked here, so it survives being
+swapped out without dirtying the repo. To use your own, crop a square, bake a
+round alpha channel into it, and install it under your username:
 
 ```sh
-magick dotfiles/.config/hypr/images/CuteAru.png \
-  -crop 1040x1040+1048+704 +repage -resize 512x512 \
+magick <picture> \
+  -resize 512x512^ -gravity center -extent 512x512 \
   \( -size 512x512 xc:none -fill white -draw "circle 256,256 256,0" \) \
   -alpha set -compose DstIn -composite \
-  png:dotfiles/sddm/faces/battery.face.icon
+  png:/tmp/face.png
+sudo cp /tmp/face.png "/usr/share/sddm/faces/$USER.face.icon"
 ```
 
-SDDM looks the file up as `<username>.face.icon`, so it needs renaming for a
-different account. Users without such a file get SDDM's built-in silhouette,
-which is square.
+The round shape has to be baked into the alpha channel because Qt6
+`MultiEffect` mask rendering drew nothing at all in this greeter build, so
+`Avatar.qml` displays the file as-is with no masking.
+
+To crop a specific region instead of the center, replace the resize/extent
+pair with `-crop <w>x<h>+<x>+<y> +repage -resize 512x512`.

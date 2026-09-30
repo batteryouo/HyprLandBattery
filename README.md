@@ -80,39 +80,63 @@ dotfiles/sddm/                # SDDM login screen theme (installed manually)
 
 This setup targets Arch Linux. The following packages are expected:
 
-`hyprland`, `hyprpaper`, `hyprlock`, `hyprswitch`, `waybar`, `mako`, `wofi`,
-`kitty`, `thunar`, `grim`, `slurp`, `wl-clipboard`, `cliphist`, `wireplumber`,
-`brightnessctl`, `playerctl`, `pavucontrol`, `network-manager-applet`,
-`polkit-kde-agent`, and the `ttf-jetbrains-mono-nerd` font.
+`hyprland`, `hyprpaper`, `hyprlock`, `hyprswitch`, `uwsm`, `sddm`, `waybar`,
+`mako`, `wofi`, `kitty`, `thunar`, `grim`, `slurp`, `wl-clipboard`, `cliphist`,
+`wireplumber`, `brightnessctl`, `playerctl`, `pavucontrol`,
+`network-manager-applet`, `polkit-kde-agent`, and the
+`ttf-jetbrains-mono-nerd` font.
 
-The `hyprbars` plugin is installed separately through `hyprpm` (see below), not
-through `pacman`.
+Two things do not come from `pacman`: the `hyprbars` plugin (installed through
+`hyprpm`) and the `sddm-astronaut-theme` login screen (from the AUR).
 
 ## Installation
 
+Full setup on a fresh Arch machine:
+
 ```sh
+# 1. Packages
+sudo pacman -S --needed hyprland hyprpaper hyprlock hyprswitch uwsm sddm \
+  waybar mako wofi kitty thunar grim slurp wl-clipboard cliphist \
+  wireplumber brightnessctl playerctl pavucontrol network-manager-applet \
+  polkit-kde-agent ttf-jetbrains-mono-nerd
+
+# 2. Dotfiles — symlinks hypr, waybar and mako into ~/.config
 git clone <this-repo-url>
 cd HyprLandBattery
 ./install.sh
-```
 
-`install.sh` will:
-
-1. Check for missing required packages (via `pacman`) and print the install
-   command for any that are missing.
-2. Symlink `dotfiles/.config/hypr`, `dotfiles/.config/waybar`, and
-   `dotfiles/.config/mako` into `~/.config/`, backing up any existing
-   directory first (as `<name>.backup-<timestamp>`).
-
-Run `./install.sh --check` to only check for missing packages without
-touching `~/.config`.
-
-After installing, enable the `hyprbars` plugin:
-
-```sh
+# 3. Window title bars
 hyprpm add https://github.com/hyprwm/hyprland-plugins
 hyprpm enable hyprbars
+
+# 4. Login screen (see dotfiles/sddm/README.md for details)
+yay -S sddm-astronaut-theme
+cd dotfiles/sddm
+sudo cp etc/sddm.conf.d/*.conf /etc/sddm.conf.d/
+sudo cp faces/example.face.icon "/usr/share/sddm/faces/$USER.face.icon"
+sudo cp themes/sddm-astronaut-theme/Main.qml \
+        /usr/share/sddm/themes/sddm-astronaut-theme/
+sudo cp themes/sddm-astronaut-theme/Components/*.qml \
+        /usr/share/sddm/themes/sddm-astronaut-theme/Components/
+sudo cp themes/sddm-astronaut-theme/Themes/battery.conf \
+        /usr/share/sddm/themes/sddm-astronaut-theme/Themes/
+sudo sed -i 's|^ConfigFile=.*|ConfigFile=Themes/battery.conf|' \
+  /usr/share/sddm/themes/sddm-astronaut-theme/metadata.desktop
+cd ../..
+
+# 5. Start the display manager on boot, then reboot
+sudo systemctl enable sddm
 ```
+
+`install.sh` only handles step 2: it checks for missing packages via `pacman`
+and symlinks `dotfiles/.config/{hypr,waybar,mako}` into `~/.config/`, backing
+up any existing directory first (as `<name>.backup-<timestamp>`). Run
+`./install.sh --check` to check packages without touching `~/.config`.
+
+Two values in `dotfiles/sddm/themes/sddm-astronaut-theme/Components/StatusInfo.qml`
+are specific to this laptop and need editing on other hardware: the battery
+(`BAT0`) and the wireless interface (`wlp0s20f3`). Check yours with
+`ls /sys/class/power_supply` and `ip link`.
 
 ## Notes
 
