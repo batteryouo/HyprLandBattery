@@ -24,7 +24,7 @@ local screenshotOutput = 'mkdir -p "' .. screenshotDir .. '" && grim - | tee "' 
 hl.bind("Print", hl.dsp.exec_cmd(screenshotRegion))
 hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd(screenshotRegion))
 hl.bind("SUPER + Print", hl.dsp.exec_cmd(screenshotOutput))
-hl.bind("SUPER + SHIFT + V", hl.dsp.exec_cmd("cliphist list | wofi --dmenu --prompt 'Clipboard' | cliphist decode | wl-copy"))
+hl.bind("SUPER + SHIFT + V", hl.dsp.exec_cmd("cliphist list | rofi -dmenu -p 'Clipboard' | cliphist decode | wl-copy"))
 
 hl.bind(mainMod .. " + left",  hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))

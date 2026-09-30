@@ -24,6 +24,7 @@ dotfiles/.config/
 │   ├── hyprlock.conf         # Lock screen appearance
 │   ├── hyprpaper.conf        # Wallpaper configuration
 │   └── images/CuteAru.png    # Wallpaper image
+├── rofi/                     # App launcher / dmenu (config.rasi + Catppuccin Mocha theme)
 ├── waybar/                   # Top status bar (config.jsonc + style.css)
 ├── mako/config               # Notification daemon config
 └── fastfetch/                # System info readout (config.jsonc + logo/)
@@ -51,7 +52,7 @@ dotfiles/sddm/                # SDDM login screen theme (installed manually)
 | `Ctrl + Alt + T` | Open terminal |
 | `Alt + F4` | Close focused window |
 | `Alt + Tab` / `Alt + Shift + Tab` | Switch windows (hyprswitch, forward/reverse) |
-| `Super + M` | Power menu (Lock / Logout / Suspend / Reboot / Shutdown via wofi) |
+| `Super + M` | Power menu (Lock / Logout / Suspend / Reboot / Shutdown via rofi) |
 | `Super + L` | Lock screen (hyprlock) |
 | `Super + E` | Open file manager |
 | `Super + V` | Toggle floating |
@@ -80,7 +81,7 @@ dotfiles/sddm/                # SDDM login screen theme (installed manually)
 This setup targets Arch Linux. The following packages are expected:
 
 `hyprland`, `hyprpaper`, `hyprlock`, `hyprswitch`, `uwsm`, `sddm`, `waybar`,
-`mako`, `fastfetch`, `wofi`, `kitty`, `thunar`, `grim`, `slurp`,
+`mako`, `fastfetch`, `rofi`, `kitty`, `thunar`, `grim`, `slurp`,
 `wl-clipboard`, `cliphist`, `wireplumber`, `brightnessctl`, `playerctl`, `pavucontrol`,
 `network-manager-applet`, `polkit-kde-agent`, and the
 `ttf-jetbrains-mono-nerd` font.
@@ -95,7 +96,7 @@ Full setup on a fresh Arch machine:
 ```sh
 # 1. Packages
 sudo pacman -S --needed hyprland hyprpaper hyprlock hyprswitch uwsm sddm \
-  waybar mako fastfetch wofi kitty thunar grim slurp wl-clipboard cliphist \
+  waybar mako fastfetch rofi kitty thunar grim slurp wl-clipboard cliphist \
   wireplumber brightnessctl playerctl pavucontrol network-manager-applet \
   polkit-kde-agent ttf-jetbrains-mono-nerd
 
@@ -113,7 +114,7 @@ sudo systemctl enable sddm
 ```
 
 `install.sh` handles step 2: it checks for missing packages via `pacman` and
-symlinks `dotfiles/.config/{hypr,waybar,mako,fastfetch}` into `~/.config/`,
+symlinks `dotfiles/.config/{hypr,waybar,mako,fastfetch,rofi}` into `~/.config/`,
 backing up any existing directory first (as `<name>.backup-<timestamp>`). Run
 `./install.sh --check` to check packages without touching `~/.config`.
 

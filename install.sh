@@ -16,7 +16,7 @@ SOURCE_DIR="$REPO_DIR/dotfiles/.config"
 TARGET_DIR="$HOME/.config"
 
 # Top-level config directories/files this repo manages under ~/.config.
-CONFIGS=(hypr waybar mako fastfetch)
+CONFIGS=(hypr waybar mako fastfetch rofi)
 
 # Packages expected to be installed on the system (Arch Linux package names).
 REQUIRED_PACKAGES=(
@@ -29,7 +29,7 @@ REQUIRED_PACKAGES=(
   waybar
   mako
   fastfetch
-  wofi
+  rofi
   kitty
   thunar
   grim

@@ -2,7 +2,7 @@
 # Power menu shared by the Super+M keybinding and the Waybar power button.
 set -euo pipefail
 
-choice=$(printf 'Lock\nLogout\nSuspend\nReboot\nShutdown' | wofi --dmenu --prompt 'Power')
+choice=$(printf 'Lock\nLogout\nSuspend\nReboot\nShutdown' | rofi -dmenu -p 'Power')
 
 case "$choice" in
   Lock) hyprlock ;;
