@@ -16,7 +16,7 @@ SOURCE_DIR="$REPO_DIR/dotfiles/.config"
 TARGET_DIR="$HOME/.config"
 
 # Top-level config directories/files this repo manages under ~/.config.
-CONFIGS=(hypr waybar swaync fastfetch rofi gtk-3.0 gtk-4.0)
+CONFIGS=(hypr waybar swaync fastfetch rofi eww gtk-3.0 gtk-4.0)
 
 # Packages expected to be installed on the system (Arch Linux package names).
 REQUIRED_PACKAGES=(
@@ -40,6 +40,7 @@ REQUIRED_PACKAGES=(
   brightnessctl
   playerctl
   pavucontrol
+  bluez-utils
   network-manager-applet
   polkit-kde-agent
   ttf-jetbrains-mono-nerd

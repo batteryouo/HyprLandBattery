@@ -27,6 +27,7 @@ dotfiles/.config/
 ├── rofi/                     # App launcher / dmenu (config.rasi + Catppuccin Mocha theme)
 ├── waybar/                   # Top status bar (config.jsonc + style.css)
 ├── swaync/                    # Notification daemon + control center (Catppuccin Mocha theme)
+├── eww/                      # Quick-settings panel (eww.yuck + eww.scss + scripts/)
 ├── fastfetch/                # System info readout (config.jsonc + logo/)
 ├── gtk-3.0/settings.ini      # GTK3 app theme (Thunar, Mousepad, pavucontrol, ...)
 └── gtk-4.0/settings.ini      # GTK4 app theme
@@ -41,9 +42,14 @@ dotfiles/sddm/                # SDDM login screen theme (installed manually)
   (Thunar, Mousepad, pavucontrol, ...) and Qt apps (the polkit agent) follow
   the same theme via `gtk-3.0`/`gtk-4.0` settings and `QT_QPA_PLATFORMTHEME`.
 - **Waybar modules**: workspaces, active window title, clock, volume, network,
-  battery, system tray, a notification center button (left-click toggles the
-  swaync panel, right-click toggles Do Not Disturb), and a power button (opens
-  the same power menu as `Super + M`).
+  battery, system tray, a quick-settings button (toggles the EWW panel, same as
+  `Super + N`), a notification center button (left-click toggles the swaync
+  panel, right-click toggles Do Not Disturb), and a power button (opens the same
+  power menu as `Super + M`).
+- **Quick-settings panel** (EWW): volume and brightness sliders, a playerctl
+  media card, and Wi-Fi/Bluetooth/mic/speaker toggles. Notifications stay in
+  swaync — the panel's DND and "Notifications Center" buttons drive
+  `swaync-client` rather than reimplementing it.
 - **Startup apps**: `kitty`, `nm-applet`, `waybar`, `hyprpaper`, `swaync`, the
   polkit-kde authentication agent, `hyprpm reload`, and `cliphist` watchers for
   both text and image clipboard history. The `hyprswitch` daemon is also
@@ -58,6 +64,7 @@ dotfiles/sddm/                # SDDM login screen theme (installed manually)
 | `Super + C` | Close focused window |
 | `Alt + Tab` / `Alt + Shift + Tab` | Switch windows (hyprswitch, forward/reverse) |
 | `Super + M` | Power menu (Lock / Logout / Suspend / Reboot / Shutdown via rofi) |
+| `Super + N` | Toggle the EWW quick-settings panel |
 | `Super + L` | Lock screen (hyprlock) |
 | `Super + E` | Open file manager |
 | `Super + V` | Toggle floating |
@@ -88,14 +95,15 @@ This setup targets Arch Linux. The following packages are expected:
 `hyprland`, `hyprpaper`, `hyprlock`, `hyprswitch`, `uwsm`, `sddm`, `waybar`,
 `swaync`, `fastfetch`, `rofi`, `kitty`, `thunar`, `grim`, `slurp`,
 `wl-clipboard`, `cliphist`, `wireplumber`, `brightnessctl`, `playerctl`, `pavucontrol`,
-`network-manager-applet`, `polkit-kde-agent`,
+`bluez-utils`, `network-manager-applet`, `polkit-kde-agent`,
 `ttf-jetbrains-mono-nerd`, `mousepad`, `loupe`, `mpv`, and `evince`.
 
 `papirus-icon-theme` is also expected (used for folder/app icons).
 
 The following do not come from `pacman` and are installed from the AUR:
-`sddm-astronaut-theme` (login screen), `catppuccin-cursors-mocha` (cursor
-theme), `catppuccin-gtk-theme-mocha` (GTK3/GTK4 theme), and
+`sddm-astronaut-theme` (login screen), `eww` (quick-settings panel; builds from
+source), `catppuccin-cursors-mocha` (cursor theme),
+`catppuccin-gtk-theme-mocha` (GTK3/GTK4 theme), and
 `papirus-folders-catppuccin-git` (recolors Papirus's folder icons).
 
 ## Installation
@@ -106,12 +114,12 @@ Full setup on a fresh Arch machine:
 # 1. Packages
 sudo pacman -S --needed hyprland hyprpaper hyprlock hyprswitch uwsm sddm \
   waybar swaync fastfetch rofi kitty thunar grim slurp wl-clipboard cliphist \
-  wireplumber brightnessctl playerctl pavucontrol network-manager-applet \
-  polkit-kde-agent ttf-jetbrains-mono-nerd mousepad loupe mpv evince \
-  papirus-icon-theme
+  wireplumber brightnessctl playerctl pavucontrol bluez-utils \
+  network-manager-applet polkit-kde-agent ttf-jetbrains-mono-nerd mousepad \
+  loupe mpv evince papirus-icon-theme
 
-# 2. Dotfiles — symlinks hypr, waybar, swaync, fastfetch, rofi, gtk-3.0 and
-#    gtk-4.0 into ~/.config
+# 2. Dotfiles — symlinks hypr, waybar, swaync, fastfetch, rofi, eww, gtk-3.0
+#    and gtk-4.0 into ~/.config
 git clone <this-repo-url>
 cd HyprLandBattery
 ./install.sh
@@ -124,12 +132,15 @@ dotfiles/sddm/apply.sh --avatar ~/Pictures/whatever.png
 yay -S catppuccin-cursors-mocha catppuccin-gtk-theme-mocha papirus-folders-catppuccin-git
 papirus-folders -C cat-mocha-blue --theme Papirus-Dark
 
+# 3c. Quick-settings panel (AUR; compiles from source, takes a few minutes)
+yay -S eww
+
 # 4. Start the display manager on boot, then reboot
 sudo systemctl enable sddm
 ```
 
 `install.sh` handles step 2: it checks for missing packages via `pacman` and
-symlinks `dotfiles/.config/{hypr,waybar,swaync,fastfetch,rofi,gtk-3.0,gtk-4.0}`
+symlinks `dotfiles/.config/{hypr,waybar,swaync,fastfetch,rofi,eww,gtk-3.0,gtk-4.0}`
 into `~/.config/`, backing up any existing directory first (as
 `<name>.backup-<timestamp>`). Run `./install.sh --check` to check packages
 without touching `~/.config`.
@@ -176,6 +187,17 @@ also installs a pacman hook that re-applies the theme after a
   swaync (symptoms: swaync never appears as a running process, the waybar
   bell does nothing, and notifications render in mako's unstyled default
   look instead of the Catppuccin theme).
+- `dotfiles/.config/eww/` is the quick-settings panel. `eww daemon` starts from
+  `startup.lua`; `scripts/toggle-quicksettings.sh` opens/closes the window and
+  is what both `Super + N` and the waybar button call. The sliders read their
+  current level from `eww/scripts/` (`wpctl` for volume, `brightnessctl` for
+  backlight) and the media card follows `playerctl`, so a widget showing
+  nothing usually means its script failed — run it directly to see the error.
+  Every `defpoll` needs an `:initial` value: until the first poll returns the
+  variable is an empty string, and `scale` (wants a float) errors out on the
+  first render without one. The panel deliberately does not render
+  notifications: its DND and "Notifications Center" buttons shell out to
+  `swaync-client`, the same commands the waybar bell uses.
 - GTK/Qt theming covers classic GTK3 apps (Thunar, Mousepad, pavucontrol) and
   Qt apps (the polkit agent, via `QT_QPA_PLATFORMTHEME=gtk3`) fully. GTK4 apps
   built on libadwaita (e.g. Loupe) mostly ignore `gtk-theme-name` by design —

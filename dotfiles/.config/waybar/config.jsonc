@@ -8,7 +8,7 @@
   "spacing": 6,
   "modules-left": ["hyprland/workspaces", "hyprland/window"],
   "modules-center": ["clock"],
-  "modules-right": ["pulseaudio", "network", "battery", "tray", "custom/notification", "custom/power"],
+  "modules-right": ["pulseaudio", "network", "battery", "tray", "custom/quicksettings", "custom/notification", "custom/power"],
 
   "hyprland/workspaces": {
     "format": "{name}",
@@ -68,6 +68,12 @@
   "tray": {
     "icon-size": 14,
     "spacing": 8
+  },
+
+  "custom/quicksettings": {
+    "format": "󰒓",
+    "tooltip-format": "Quick settings",
+    "on-click": "~/.config/eww/scripts/toggle-quicksettings.sh"
   },
 
   "custom/notification": {

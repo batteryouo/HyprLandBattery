@@ -18,6 +18,7 @@ window#waybar {
 #network,
 #battery,
 #tray,
+#custom-quicksettings,
 #custom-notification,
 #custom-power {
   background: rgba(30, 30, 46, 0.92);
@@ -83,6 +84,17 @@ window#waybar {
 
 #tray > .passive { -gtk-icon-effect: dim; }
 #tray > .needs-attention { -gtk-icon-effect: highlight; }
+
+#custom-quicksettings {
+  color: #89dceb;
+  padding: 0 10px;
+  transition: all 0.2s ease;
+}
+
+#custom-quicksettings:hover {
+  background: #89dceb;
+  color: #1e1e2e;
+}
 
 #custom-notification {
   color: #cba6f7;

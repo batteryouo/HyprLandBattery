@@ -1,0 +1,147 @@
+// Catppuccin Mocha palette, matching waybar/style.css and
+// rofi/themes/catppuccin-mocha.rasi so this panel feels like one system.
+$base:    #1e1e2e;
+$surface: #313244;
+$text:    #cdd6f4;
+$subtext: #bac2de;
+$overlay: #6c7086;
+$blue:    #89b4fa;
+$sky:     #89dceb;
+$green:   #a6e3a1;
+$yellow:  #f9e2af;
+$peach:   #fab387;
+$red:     #f38ba8;
+$mauve:   #cba6f7;
+
+* {
+  all: unset;
+  font-family: "JetBrainsMono Nerd Font";
+}
+
+.qs-root {
+  background-color: rgba(30, 30, 46, 0.92);
+  border: 1px solid rgba(137, 180, 250, 0.18);
+  border-radius: 10px;
+  padding: 12px;
+  color: $text;
+}
+
+.qs-card {
+  background-color: $base;
+  border: 1px solid rgba(137, 180, 250, 0.18);
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 8px;
+}
+
+.qs-header {
+  margin-bottom: 8px;
+  padding: 0 4px;
+}
+
+.qs-user {
+  font-weight: bold;
+  font-size: 14px;
+  color: $blue;
+}
+
+.qs-uptime {
+  font-size: 11px;
+  color: $subtext;
+  margin-left: 8px;
+}
+
+.qs-icon-sm {
+  font-size: 14px;
+  color: $sky;
+  margin-right: 8px;
+}
+
+.qs-title {
+  font-weight: bold;
+  font-size: 12px;
+  color: $text;
+}
+
+.qs-subtitle {
+  font-size: 11px;
+  color: $subtext;
+}
+
+
+.qs-slider-row {
+  margin-bottom: 6px;
+}
+
+.qs-slider {
+  trough {
+    background-color: $surface;
+    border-radius: 6px;
+    min-height: 10px;
+    min-width: 200px;
+
+    highlight {
+      background-color: $mauve;
+      border-radius: 6px;
+      min-height: 10px;
+    }
+  }
+
+  slider {
+    background-color: $text;
+    border-radius: 50%;
+    min-height: 14px;
+    min-width: 14px;
+    margin: -3px;
+  }
+}
+
+.qs-media-controls {
+  margin-top: 6px;
+}
+
+.qs-btn {
+  background-color: $surface;
+  border-radius: 8px;
+  padding: 4px 10px;
+  color: $text;
+}
+
+.qs-btn:hover {
+  background-color: $blue;
+  color: $base;
+}
+
+.qs-toggles {
+  padding: 8px;
+}
+
+.qs-toggle {
+  background-color: $surface;
+  border-radius: 8px;
+  padding: 6px 10px;
+  color: $overlay;
+  font-size: 16px;
+}
+
+.qs-toggle-active {
+  background-color: $blue;
+  color: $base;
+}
+
+.qs-row-btn {
+  background-color: $surface;
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: $text;
+  font-size: 12px;
+}
+
+.qs-row-btn:hover {
+  background-color: $blue;
+  color: $base;
+}
+
+.qs-notif-btn {
+  margin-top: 6px;
+}

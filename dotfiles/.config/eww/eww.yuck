@@ -1,0 +1,90 @@
+;; Quick-settings / control-center panel. Complements swaync rather than
+;; replacing it: notification history and DND state still live in swaync
+;; (already themed) — this panel reuses its CLI (`swaync-client`) instead of
+;; reimplementing it. Opened via the waybar `custom/quicksettings` button or
+;; Super+N, both calling scripts/toggle-quicksettings.sh.
+
+;; Every defpoll needs an :initial — until its first poll returns, the variable
+;; is an empty string, and the typed widgets below (scale wants f64, `for`
+;; wants a json array) hard-error on the first render without one.
+;;
+;; `uname -n`, not `hostname` — the inetutils package isn't installed here.
+(defpoll hostname :interval "3600s" :initial "" "uname -n")
+(defpoll uptime_str :interval "60s" :initial "" "uptime -p | sed 's/^up //'")
+
+(defpoll volume_pct :interval "1s" :initial "0" "~/.config/eww/scripts/volume.sh")
+(defpoll brightness_pct :interval "1s" :initial "0" "~/.config/eww/scripts/brightness.sh")
+
+(defpoll wifi_on :interval "3s" :initial "false" "sh -c 'test \"$(nmcli radio wifi)\" = enabled && echo true || echo false'")
+(defpoll bt_on :interval "3s" :initial "false" "sh -c 'bluetoothctl show | grep -q \"Powered: yes\" && echo true || echo false'")
+(defpoll mic_muted :interval "2s" :initial "false" "sh -c 'wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | grep -q MUTED && echo true || echo false'")
+(defpoll speaker_muted :interval "2s" :initial "false" "sh -c 'wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -q MUTED && echo true || echo false'")
+(defpoll dnd_on :interval "3s" :initial "false" "sh -c 'swaync-client -D 2>/dev/null | grep -q true && echo true || echo false'")
+
+(deflisten media_json :initial "{\"title\":\"\",\"artist\":\"\",\"status\":\"Stopped\"}"
+  "playerctl --follow metadata --format '{\"title\":\"{{title}}\",\"artist\":\"{{artist}}\",\"status\":\"{{status}}\"}' 2>/dev/null || echo '{\"title\":\"\",\"artist\":\"\",\"status\":\"Stopped\"}'")
+
+(defwidget header []
+  (box :class "qs-header" :orientation "h" :space-evenly false
+    (label :class "qs-user" :text hostname)
+    (label :class "qs-uptime" :text "up ${uptime_str}")))
+
+(defwidget sliders []
+  (box :class "qs-card" :orientation "v" :space-evenly false
+    (box :class "qs-slider-row" :orientation "h" :space-evenly false
+      (label :class "qs-icon-sm" :text "󰕾")
+      (scale :min 0 :max 100 :value volume_pct :hexpand true :class "qs-slider"
+        :onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%"))
+    (box :class "qs-slider-row" :orientation "h" :space-evenly false
+      (label :class "qs-icon-sm" :text "󰃟")
+      (scale :min 0 :max 100 :value brightness_pct :hexpand true :class "qs-slider"
+        :onchange "brightnessctl set {}%"))))
+
+(defwidget media []
+  (box :class "qs-card" :orientation "v" :space-evenly false
+    (label :class "qs-title" :halign "start" :limit-width 34
+      :text {media_json.title == "" ? "Nothing playing" : media_json.title})
+    (label :class "qs-subtitle" :halign "start" :text "${media_json.artist}")
+    (box :class "qs-media-controls" :orientation "h" :space-evenly true
+      (button :class "qs-btn" :onclick "playerctl previous" "󰒮")
+      (button :class "qs-btn" :onclick "playerctl play-pause"
+        {media_json.status == "Playing" ? "󰏤" : "󰐊"})
+      (button :class "qs-btn" :onclick "playerctl next" "󰒭"))))
+
+(defwidget toggle-btn [icon active onclick]
+  (button :class "qs-toggle ${active == "true" ? "qs-toggle-active" : ""}" :onclick onclick icon))
+
+(defwidget quick-toggles []
+  (box :class "qs-card qs-toggles" :orientation "h" :space-evenly true
+    (toggle-btn :icon "󰤨" :active wifi_on
+      :onclick {wifi_on == "true" ? "nmcli radio wifi off" : "nmcli radio wifi on"})
+    (toggle-btn :icon "󰂯" :active bt_on
+      :onclick {bt_on == "true" ? "bluetoothctl power off" : "bluetoothctl power on"})
+    (toggle-btn :icon {mic_muted == "true" ? "󰍭" : "󰍬"} :active mic_muted
+      :onclick "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle")
+    (toggle-btn :icon {speaker_muted == "true" ? "󰝟" : "󰕾"} :active speaker_muted
+      :onclick "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle")))
+
+(defwidget notification-row []
+  (box :class "qs-card" :orientation "v" :space-evenly false
+    (button :class "qs-row-btn ${dnd_on == "true" ? "qs-toggle-active" : ""}"
+      :onclick "swaync-client -d -sw" "󰂛   Do Not Disturb")
+    (button :class "qs-row-btn qs-notif-btn" :onclick "swaync-client -t -sw"
+      "󰂚   Notifications Center")))
+
+(defwidget quicksettings []
+  (box :class "qs-root" :orientation "v" :space-evenly false
+    (header)
+    (sliders)
+    (media)
+    (quick-toggles)
+    (notification-row)))
+
+(defwindow quicksettings
+  :monitor 0
+  :windowtype "dialog"
+  :stacking "overlay"
+  :exclusive false
+  :focusable false
+  :geometry (geometry :x "10px" :y "10px" :width "340px" :height "0px" :anchor "top right")
+  (quicksettings))

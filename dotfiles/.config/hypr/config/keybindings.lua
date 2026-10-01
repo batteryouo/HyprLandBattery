@@ -11,6 +11,7 @@ hl.bind("ALT + SHIFT + TAB", hl.dsp.exec_cmd(reverseAltTab))
 
 hl.bind(mainMod .. " + C", hl.dsp.window.close())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("~/.config/hypr/scripts/powermenu.sh"))
+hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("~/.config/eww/scripts/toggle-quicksettings.sh"))
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(options.fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))

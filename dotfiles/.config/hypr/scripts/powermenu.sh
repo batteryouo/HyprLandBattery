@@ -2,12 +2,12 @@
 # Power menu shared by the Super+M keybinding and the Waybar power button.
 set -euo pipefail
 
-choice=$(printf 'Lock\nLogout\nSuspend\nReboot\nShutdown' | rofi -dmenu -p 'Power')
+choice=$(printf '󰌾  Lock\n󰍃  Logout\n󰤄  Suspend\n󰜉  Reboot\n󰐥  Shutdown' | rofi -dmenu -p 'Power')
 
 case "$choice" in
-  Lock) hyprlock ;;
-  Logout) uwsm stop ;;
-  Suspend) systemctl suspend ;;
-  Reboot) systemctl reboot ;;
-  Shutdown) systemctl poweroff ;;
+  *Lock) hyprlock ;;
+  *Logout) uwsm stop ;;
+  *Suspend) systemctl suspend ;;
+  *Reboot) systemctl reboot ;;
+  *Shutdown) systemctl poweroff ;;
 esac
