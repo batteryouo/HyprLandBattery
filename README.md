@@ -168,6 +168,14 @@ also installs a pacman hook that re-applies the theme after a
   package). It's a starting template — swap the accent in both `XCURSOR_THEME`
   and `HYPRCURSOR_THEME` (e.g. to `catppuccin-mocha-mauve-cursors`) to change
   it later without starting from scratch.
+- If you previously installed `mako` (this repo used it before switching to
+  swaync), uninstall it or run `systemctl --user mask mako.service`. `mako`
+  ships a D-Bus activation file for `org.freedesktop.Notifications`, so even
+  with it removed from `startup.lua` it can still get auto-started by the
+  first notification sent and silently steal the notification role from
+  swaync (symptoms: swaync never appears as a running process, the waybar
+  bell does nothing, and notifications render in mako's unstyled default
+  look instead of the Catppuccin theme).
 - GTK/Qt theming covers classic GTK3 apps (Thunar, Mousepad, pavucontrol) and
   Qt apps (the polkit agent, via `QT_QPA_PLATFORMTHEME=gtk3`) fully. GTK4 apps
   built on libadwaita (e.g. Loupe) mostly ignore `gtk-theme-name` by design —
