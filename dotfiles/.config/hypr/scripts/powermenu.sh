@@ -6,7 +6,7 @@ choice=$(printf 'Lock\nLogout\nSuspend\nReboot\nShutdown' | rofi -dmenu -p 'Powe
 
 case "$choice" in
   Lock) hyprlock ;;
-  Logout) hyprctl dispatch exit ;;
+  Logout) uwsm stop ;;
   Suspend) systemctl suspend ;;
   Reboot) systemctl reboot ;;
   Shutdown) systemctl poweroff ;;
