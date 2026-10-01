@@ -32,7 +32,9 @@ hl.window_rule({
 
 hl.config({
     layerrule = {
-        { rule = "blur",            namespace = "notifications" },
-        { rule = "ignorezero",      namespace = "notifications" },
+        { rule = "blur",       namespace = "swaync-notification-window" },
+        { rule = "ignorezero", namespace = "swaync-notification-window" },
+        { rule = "blur",       namespace = "swaync-control-center" },
+        { rule = "ignorezero", namespace = "swaync-control-center" },
     },
 })

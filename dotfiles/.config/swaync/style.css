@@ -1,0 +1,67 @@
+/* Import the stock swaync stylesheet, then override its color variables
+   below with Catppuccin Mocha so every widget inherits them. */
+@import url("/etc/xdg/swaync/style.css");
+
+:root {
+  --cc-bg: rgba(30, 30, 46, 0.85);
+  --noti-border-color: rgba(69, 71, 90, 0.6);
+  --noti-bg: 30, 30, 46;
+  --noti-bg-alpha: 0.85;
+  --noti-bg-darker: rgb(17, 17, 27);
+  --noti-bg-hover: rgb(49, 50, 68);
+  --noti-bg-focus: rgba(69, 71, 90, 0.6);
+  --noti-close-bg: rgb(69, 71, 90);
+  --noti-close-bg-hover: rgb(88, 91, 112);
+  --text-color: rgb(205, 214, 244);
+  --text-color-disabled: rgb(108, 112, 134);
+  --bg-selected: rgb(137, 180, 250);
+  --border: 1px solid var(--noti-border-color);
+  --border-radius: 12px;
+}
+
+@define-color cc-bg rgba(30, 30, 46, 0.85);
+@define-color noti-border-color rgba(69, 71, 90, 0.6);
+@define-color noti-bg rgba(30, 30, 46, 0.85);
+@define-color noti-bg-opaque rgb(30, 30, 46);
+@define-color noti-bg-darker rgb(17, 17, 27);
+@define-color noti-bg-hover rgb(49, 50, 68);
+@define-color noti-bg-hover-opaque rgb(49, 50, 68);
+@define-color noti-bg-focus rgba(69, 71, 90, 0.6);
+@define-color noti-close-bg rgba(69, 71, 90, 0.6);
+@define-color noti-close-bg-hover rgba(88, 91, 112, 0.6);
+@define-color text-color rgb(205, 214, 244);
+@define-color text-color-disabled rgb(108, 112, 134);
+@define-color bg-selected rgb(137, 180, 250);
+
+* {
+  font-family: "JetBrainsMono Nerd Font", sans-serif;
+}
+
+.control-center {
+  border: 1px solid rgba(69, 71, 90, 0.6);
+}
+
+.widget-title > label {
+  color: rgb(205, 214, 244);
+}
+
+.widget-title > button {
+  background: rgba(69, 71, 90, 0.6);
+  color: rgb(205, 214, 244);
+}
+
+.widget-title > button:hover {
+  background: rgba(88, 91, 112, 0.6);
+}
+
+.widget-dnd label {
+  color: rgb(205, 214, 244);
+}
+
+.widget-dnd switch:checked {
+  background-color: rgb(137, 180, 250);
+}
+
+.notification-row .notification-background .notification.critical {
+  border: 1px solid rgb(243, 139, 168);
+}

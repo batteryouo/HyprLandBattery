@@ -26,7 +26,7 @@ dotfiles/.config/
 │   └── images/CuteAru.png    # Wallpaper image
 ├── rofi/                     # App launcher / dmenu (config.rasi + Catppuccin Mocha theme)
 ├── waybar/                   # Top status bar (config.jsonc + style.css)
-├── mako/config               # Notification daemon config
+├── swaync/                    # Notification daemon + control center (Catppuccin Mocha theme)
 └── fastfetch/                # System info readout (config.jsonc + logo/)
 
 dotfiles/sddm/                # SDDM login screen theme (installed manually)
@@ -37,9 +37,10 @@ dotfiles/sddm/                # SDDM login screen theme (installed manually)
 - **Theme**: Catppuccin Mocha color scheme throughout, with a blue-green gradient
   on active window borders and a floating, rounded-pill Waybar.
 - **Waybar modules**: workspaces, active window title, clock, volume, network,
-  battery, system tray, and a power button (opens the same power menu as
-  `Super + M`).
-- **Startup apps**: `kitty`, `nm-applet`, `waybar`, `hyprpaper`, `mako`, the
+  battery, system tray, a notification center button (left-click toggles the
+  swaync panel, right-click toggles Do Not Disturb), and a power button (opens
+  the same power menu as `Super + M`).
+- **Startup apps**: `kitty`, `nm-applet`, `waybar`, `hyprpaper`, `swaync`, the
   polkit-kde authentication agent, `hyprpm reload`, and `cliphist` watchers for
   both text and image clipboard history. The `hyprswitch` daemon is also
   started, with any stale instance killed first and its output logged to
@@ -81,7 +82,7 @@ dotfiles/sddm/                # SDDM login screen theme (installed manually)
 This setup targets Arch Linux. The following packages are expected:
 
 `hyprland`, `hyprpaper`, `hyprlock`, `hyprswitch`, `uwsm`, `sddm`, `waybar`,
-`mako`, `fastfetch`, `rofi`, `kitty`, `thunar`, `grim`, `slurp`,
+`swaync`, `fastfetch`, `rofi`, `kitty`, `thunar`, `grim`, `slurp`,
 `wl-clipboard`, `cliphist`, `wireplumber`, `brightnessctl`, `playerctl`, `pavucontrol`,
 `network-manager-applet`, `polkit-kde-agent`,
 `ttf-jetbrains-mono-nerd`, `mousepad`, `loupe`, `mpv`, and `evince`.
@@ -96,11 +97,11 @@ Full setup on a fresh Arch machine:
 ```sh
 # 1. Packages
 sudo pacman -S --needed hyprland hyprpaper hyprlock hyprswitch uwsm sddm \
-  waybar mako fastfetch rofi kitty thunar grim slurp wl-clipboard cliphist \
+  waybar swaync fastfetch rofi kitty thunar grim slurp wl-clipboard cliphist \
   wireplumber brightnessctl playerctl pavucontrol network-manager-applet \
   polkit-kde-agent ttf-jetbrains-mono-nerd mousepad loupe mpv evince
 
-# 2. Dotfiles — symlinks hypr, waybar, mako and fastfetch into ~/.config
+# 2. Dotfiles — symlinks hypr, waybar, swaync and fastfetch into ~/.config
 git clone <this-repo-url>
 cd HyprLandBattery
 ./install.sh
@@ -114,7 +115,7 @@ sudo systemctl enable sddm
 ```
 
 `install.sh` handles step 2: it checks for missing packages via `pacman` and
-symlinks `dotfiles/.config/{hypr,waybar,mako,fastfetch,rofi}` into `~/.config/`,
+symlinks `dotfiles/.config/{hypr,waybar,swaync,fastfetch,rofi}` into `~/.config/`,
 backing up any existing directory first (as `<name>.backup-<timestamp>`). Run
 `./install.sh --check` to check packages without touching `~/.config`.
 
