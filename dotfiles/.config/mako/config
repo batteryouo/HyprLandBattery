@@ -1,3 +1,31 @@
-# Keep notifications visible briefly, including notifications that request no expiry.
-default-timeout=5000
+# Catppuccin Mocha themed notifications
+
+default-timeout=3000
 ignore-timeout=1
+
+# Layout
+font=JetBrainsMono Nerd Font 10
+width=350
+height=120
+margin=10
+padding=15
+border-size=1
+border-radius=12
+max-visible=2
+anchor=top-right
+
+# Colors (Catppuccin Mocha)
+background-color=#1e1e2ecc
+text-color=#cdd6f4
+border-color=#45475a
+progress-color=over #313244
+
+[urgency=low]
+border-color=#45475a
+
+[urgency=normal]
+border-color=#585b70
+
+[urgency=critical]
+border-color=#f38ba8
+default-timeout=0

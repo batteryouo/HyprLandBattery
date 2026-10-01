@@ -29,3 +29,10 @@ hl.window_rule({
     match = { class = "^kitty$" },
     opacity = "0.85 0.6",
 })
+
+hl.config({
+    layerrule = {
+        { rule = "blur",            namespace = "notifications" },
+        { rule = "ignorezero",      namespace = "notifications" },
+    },
+})
