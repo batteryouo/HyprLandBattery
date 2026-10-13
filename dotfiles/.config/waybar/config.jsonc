@@ -8,7 +8,7 @@
   "spacing": 6,
   "modules-left": ["hyprland/workspaces", "hyprland/window"],
   "modules-center": ["clock"],
-  "modules-right": ["pulseaudio", "network", "battery", "tray", "custom/quicksettings", "custom/notification", "custom/power"],
+  "modules-right": ["pulseaudio", "network", "battery", "tray", "custom/quicksettings", "custom/power"],
 
   "hyprland/workspaces": {
     "format": "{name}",
@@ -20,7 +20,7 @@
 
   "hyprland/window": {
     "format": "{}",
-    "max-length": 48,
+    "max-length": 30,
     "separate-outputs": true
   },
 
@@ -70,29 +70,15 @@
     "spacing": 8
   },
 
+  // One pull-down button for the whole shade. The icon stays a chevron; the
+  // `class` swaync reports (notification / dnd-*) is what tints it, so this
+  // doubles as the notification indicator.
   "custom/quicksettings": {
-    "format": "󰒓",
-    "tooltip-format": "Quick settings",
-    "on-click": "~/.config/eww/scripts/toggle-quicksettings.sh"
-  },
-
-  "custom/notification": {
-    "tooltip": false,
-    "format": "{icon}",
-    "format-icons": {
-      "notification": "󰂚",
-      "none": "󰂜",
-      "dnd-notification": "󰂛",
-      "dnd-none": "󰪑",
-      "inhibited-notification": "󰂚",
-      "inhibited-none": "󰂜",
-      "dnd-inhibited-notification": "󰂛",
-      "dnd-inhibited-none": "󰪑"
-    },
+    "format": "󰅀",
     "return-type": "json",
     "exec-if": "which swaync-client",
     "exec": "swaync-client -swb",
-    "on-click": "swaync-client -t -sw",
+    "on-click": "~/.config/eww/scripts/toggle-quicksettings.sh",
     "on-click-right": "swaync-client -d -sw",
     "escape": true
   },

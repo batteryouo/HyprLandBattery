@@ -19,7 +19,6 @@ window#waybar {
 #battery,
 #tray,
 #custom-quicksettings,
-#custom-notification,
 #custom-power {
   background: rgba(30, 30, 46, 0.92);
   border: 1px solid rgba(137, 180, 250, 0.18);
@@ -91,14 +90,22 @@ window#waybar {
   transition: all 0.2s ease;
 }
 
+/* Classes come from swaync's -swb output, so the chevron also reports state. */
+#custom-quicksettings.notification,
+#custom-quicksettings.inhibited-notification {
+  color: #cba6f7;
+}
+
+#custom-quicksettings.dnd-none,
+#custom-quicksettings.dnd-notification,
+#custom-quicksettings.dnd-inhibited-none,
+#custom-quicksettings.dnd-inhibited-notification {
+  color: #6c7086;
+}
+
 #custom-quicksettings:hover {
   background: #89dceb;
   color: #1e1e2e;
-}
-
-#custom-notification {
-  color: #cba6f7;
-  padding: 0 10px;
 }
 
 #custom-power {

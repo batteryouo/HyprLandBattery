@@ -42,10 +42,11 @@ dotfiles/sddm/                # SDDM login screen theme (installed manually)
   (Thunar, Mousepad, pavucontrol, ...) and Qt apps (the polkit agent) follow
   the same theme via `gtk-3.0`/`gtk-4.0` settings and `QT_QPA_PLATFORMTHEME`.
 - **Waybar modules**: workspaces, active window title, clock, volume, network,
-  battery, system tray, a quick-settings button (toggles the EWW panel, same as
-  `Super + N`), a notification center button (left-click toggles the swaync
-  panel, right-click toggles Do Not Disturb), and a power button (opens the same
-  power menu as `Super + M`).
+  battery, system tray, a pull-down shade button (left-click toggles the EWW
+  panel like `Super + N`, right-click toggles Do Not Disturb), and a power
+  button (opens the same power menu as `Super + M`). The shade chevron doubles
+  as the notification indicator: it tints when notifications are pending and
+  dims under Do Not Disturb.
 - **Quick-settings panel** (EWW): volume and brightness sliders, a playerctl
   media card, and Wi-Fi/Bluetooth/mic/speaker toggles. Notifications stay in
   swaync — the panel's DND and "Notifications Center" buttons drive
@@ -197,7 +198,11 @@ also installs a pacman hook that re-applies the theme after a
   variable is an empty string, and `scale` (wants a float) errors out on the
   first render without one. The panel deliberately does not render
   notifications: its DND and "Notifications Center" buttons shell out to
-  `swaync-client`, the same commands the waybar bell uses.
+  `swaync-client`, which opens swaync's own panel on top.
+- The waybar shade button is a single `custom/quicksettings` module that runs
+  `swaync-client -swb` purely for its `class` output — waybar applies that as a
+  CSS class, so one chevron reports notification/DND state while its click
+  opens the EWW panel instead of swaync's.
 - GTK/Qt theming covers classic GTK3 apps (Thunar, Mousepad, pavucontrol) and
   Qt apps (the polkit agent, via `QT_QPA_PLATFORMTHEME=gtk3`) fully. GTK4 apps
   built on libadwaita (e.g. Loupe) mostly ignore `gtk-theme-name` by design —
