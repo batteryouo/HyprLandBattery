@@ -69,7 +69,7 @@
   (box :class "qs-card" :orientation "v" :space-evenly false
     (button :class "qs-row-btn ${dnd_on == "true" ? "qs-toggle-active" : ""}"
       :onclick "swaync-client -d -sw" "󰂛   Do Not Disturb")
-    (button :class "qs-row-btn qs-notif-btn" :onclick "swaync-client -t -sw"
+    (button :class "qs-row-btn qs-notif-btn" :onclick "eww close quicksettings; swaync-client -t -sw"
       "󰂚   Notifications Center")))
 
 (defwidget quicksettings []
