@@ -72,13 +72,21 @@
     (button :class "qs-row-btn qs-notif-btn" :onclick "eww close quicksettings; swaync-client -t -sw"
       "󰂚   Notifications Center")))
 
+(defwidget power-row []
+  (box :class "qs-card qs-power-row" :orientation "h" :space-evenly true
+    (button :class "qs-power-btn" :onclick "eww close quicksettings; hyprlock" "󰌾")
+    (button :class "qs-power-btn" :onclick "eww close quicksettings; systemctl suspend" "󰤄")
+    (button :class "qs-power-btn" :onclick "eww close quicksettings; systemctl reboot" "󰜉")
+    (button :class "qs-power-btn qs-power-shutdown" :onclick "eww close quicksettings; systemctl poweroff" "󰐥")))
+
 (defwidget quicksettings []
   (box :class "qs-root" :orientation "v" :space-evenly false
     (header)
     (sliders)
     (media)
     (quick-toggles)
-    (notification-row)))
+    (notification-row)
+    (power-row)))
 
 (defwindow quicksettings
   :monitor 0

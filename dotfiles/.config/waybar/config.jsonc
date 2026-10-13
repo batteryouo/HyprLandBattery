@@ -1,32 +1,32 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 28,
-  "margin-top": 6,
-  "margin-left": 10,
-  "margin-right": 10,
-  "spacing": 6,
-  "modules-left": ["hyprland/workspaces", "hyprland/window"],
+  "height": 16,
+  "margin-top": 4,
+  "margin-left": 8,
+  "margin-right": 8,
+  "spacing": 0,
+  "modules-left": ["custom/launcher", "hyprland/workspaces"],
   "modules-center": ["clock"],
-  "modules-right": ["pulseaudio", "network", "battery", "tray", "custom/quicksettings", "custom/power"],
+  "modules-right": ["pulseaudio", "network", "battery", "tray", "custom/quicksettings"],
+
+  "custom/launcher": {
+    "format": "󰣇",
+    "tooltip-format": "App Launcher",
+    "on-click": "rofi -show drun"
+  },
 
   "hyprland/workspaces": {
-    "format": "{name}",
+    "format": "●",
     "on-click": "activate",
     "on-scroll-up": "hyprctl dispatch workspace e+1",
     "on-scroll-down": "hyprctl dispatch workspace e-1",
     "sort-by-number": true
   },
 
-  "hyprland/window": {
-    "format": "{}",
-    "max-length": 30,
-    "separate-outputs": true
-  },
-
   "clock": {
-    "format": "󰥔  {:%H:%M}",
-    "format-alt": "󰃭  {:%a, %d %b %Y}",
+    "format": "{:%H:%M}",
+    "format-alt": "{:%a, %d %b %Y}",
     "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
     "on-click": "mode"
   },
@@ -70,9 +70,6 @@
     "spacing": 8
   },
 
-  // One pull-down button for the whole shade. The icon stays a chevron; the
-  // `class` swaync reports (notification / dnd-*) is what tints it, so this
-  // doubles as the notification indicator.
   "custom/quicksettings": {
     "format": "󰅀",
     "return-type": "json",
@@ -81,11 +78,5 @@
     "on-click": "~/.config/eww/scripts/toggle-quicksettings.sh",
     "on-click-right": "swaync-client -d -sw",
     "escape": true
-  },
-
-  "custom/power": {
-    "format": "󰐥",
-    "tooltip-format": "Power menu",
-    "on-click": "~/.config/hypr/scripts/powermenu.sh"
   }
 }

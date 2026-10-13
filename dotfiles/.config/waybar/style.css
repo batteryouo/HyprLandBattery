@@ -2,72 +2,54 @@
   border: none;
   border-radius: 0;
   font-family: "JetBrainsMono Nerd Font", "Font Awesome 6 Free", sans-serif;
-  font-size: 12px;
+  font-size: 11px;
   min-height: 0;
 }
 
 window#waybar {
-  background: transparent;
-  color: #cdd6f4;
+  background: rgba(30, 30, 46, 0.92);
+  border: 1px solid rgba(137, 180, 250, 0.12);
+  border-radius: 12px;
+  color: #bac2de;
 }
 
-#workspaces,
-#window,
-#clock,
-#pulseaudio,
-#network,
-#battery,
-#tray,
-#custom-quicksettings,
-#custom-power {
-  background: rgba(30, 30, 46, 0.92);
-  border: 1px solid rgba(137, 180, 250, 0.18);
-  border-radius: 10px;
-  min-height: 22px;
+#custom-launcher {
+  color: #89b4fa;
+  font-size: 13px;
+  padding: 0 8px 0 10px;
 }
 
 #workspaces {
-  padding: 0 4px;
+  padding: 0 2px 0 4px;
 }
 
 #workspaces button {
-  color: #6c7086;
-  padding: 0 6px;
-  margin: 3px 2px;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-}
-
-#workspaces button:hover {
-  background: #313244;
-  color: #cdd6f4;
+  font-size: 7px;
+  color: rgba(108, 112, 134, 0.5);
+  background: transparent;
+  padding: 0 2px;
+  transition: all 0.15s ease;
 }
 
 #workspaces button.active {
-  background: #89b4fa;
-  color: #1e1e2e;
+  color: #cdd6f4;
 }
 
 #workspaces button.urgent {
   background: #f38ba8;
-  color: #1e1e2e;
-}
-
-#window {
-  color: #bac2de;
-  padding: 0 10px;
 }
 
 #clock {
-  color: #89b4fa;
-  font-weight: bold;
-  padding: 0 12px;
+  color: #cdd6f4;
+  padding: 0 8px;
 }
 
 #pulseaudio,
 #network,
-#battery {
-  padding: 0 9px;
+#battery,
+#tray,
+#custom-quicksettings {
+  padding: 0 6px;
 }
 
 #pulseaudio { color: #89dceb; }
@@ -77,20 +59,15 @@ window#waybar {
 #battery.critical { color: #f38ba8; }
 #battery.charging { color: #a6e3a1; }
 
-#tray {
-  padding: 0 8px;
-}
-
 #tray > .passive { -gtk-icon-effect: dim; }
 #tray > .needs-attention { -gtk-icon-effect: highlight; }
 
 #custom-quicksettings {
   color: #89dceb;
-  padding: 0 10px;
-  transition: all 0.2s ease;
+  padding: 0 10px 0 6px;
+  transition: all 0.15s ease;
 }
 
-/* Classes come from swaync's -swb output, so the chevron also reports state. */
 #custom-quicksettings.notification,
 #custom-quicksettings.inhibited-notification {
   color: #cba6f7;
@@ -103,29 +80,13 @@ window#waybar {
   color: #6c7086;
 }
 
-#custom-quicksettings:hover {
-  background: #89dceb;
-  color: #1e1e2e;
-}
-
-#custom-power {
-  color: #f38ba8;
-  padding: 0 10px;
-  transition: all 0.2s ease;
-}
-
-#custom-power:hover {
-  background: #f38ba8;
-  color: #1e1e2e;
-}
-
 tooltip {
   background: #1e1e2e;
   border: 1px solid #45475a;
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
 tooltip label {
   color: #cdd6f4;
-  padding: 6px;
+  padding: 4px 6px;
 }
