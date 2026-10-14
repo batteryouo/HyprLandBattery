@@ -94,5 +94,9 @@
   :stacking "overlay"
   :exclusive false
   :focusable false
-  :geometry (geometry :x "10px" :y "10px" :width "340px" :height "0px" :anchor "top right")
-  (quicksettings))
+  :geometry (geometry :x "0px" :y "0px" :width "100%" :height "100%" :anchor "top left")
+  (overlay
+    (eventbox :onclick "eww close quicksettings"
+      (box :hexpand true :vexpand true))
+    (box :class "qs-position" :halign "end" :valign "start"
+      (quicksettings))))

@@ -203,6 +203,9 @@ also installs a pacman hook that re-applies the theme after a
   `swaync-client -swb` purely for its `class` output — waybar applies that as a
   CSS class, so one chevron reports notification/DND state while its click
   opens the EWW panel instead of swaync's.
+- The EWW panel closes when clicking outside it. Its transparent full-screen
+  click area consumes that outside click; click the underlying app again to
+  interact with it.
 - GTK/Qt theming covers classic GTK3 apps (Thunar, Mousepad, pavucontrol) and
   Qt apps (the polkit agent, via `QT_QPA_PLATFORMTHEME=gtk3`) fully. GTK4 apps
   built on libadwaita (e.g. Loupe) mostly ignore `gtk-theme-name` by design —
