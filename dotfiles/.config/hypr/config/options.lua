@@ -1,6 +1,6 @@
 return {
     terminal = "kitty",
     fileManager = "thunar",
-    menu = "rofi -show drun",
+    menu = "~/.config/hypr/scripts/app-launcher.sh",
     mainMod = "SUPER",
 }

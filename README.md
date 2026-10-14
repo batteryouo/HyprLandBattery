@@ -51,6 +51,10 @@ dotfiles/sddm/                # SDDM login screen theme (installed manually)
   media card, and Wi-Fi/Bluetooth/mic/speaker toggles. Notifications stay in
   swaync — the panel's DND and "Notifications Center" buttons drive
   `swaync-client` rather than reimplementing it.
+- **App launcher**: `Super + R` or the Waybar icon toggles a searchable rofi menu
+  below the left edge of the bar. Hyprland slides it in and out and closes it
+  when clicking outside its bounds. The mouse binding is active only while the
+  menu is open.
 - **Startup apps**: `kitty`, `nm-applet`, `waybar`, `hyprpaper`, `swaync`, the
   polkit-kde authentication agent, `hyprpm reload`, and `cliphist` watchers for
   both text and image clipboard history. The `hyprswitch` daemon is also
@@ -69,7 +73,7 @@ dotfiles/sddm/                # SDDM login screen theme (installed manually)
 | `Super + L` | Lock screen (hyprlock) |
 | `Super + E` | Open file manager |
 | `Super + V` | Toggle floating |
-| `Super + R` | Open app launcher |
+| `Super + R` | Toggle app launcher |
 | `Super + P` | Pseudo-tile window |
 | `Super + J` | Toggle split |
 | `F11` | Toggle fullscreen |
@@ -95,7 +99,7 @@ This setup targets Arch Linux. The following packages are expected:
 
 `hyprland`, `hyprpaper`, `hyprlock`, `hyprswitch`, `uwsm`, `sddm`, `waybar`,
 `swaync`, `fastfetch`, `rofi`, `kitty`, `thunar`, `grim`, `slurp`,
-`wl-clipboard`, `cliphist`, `wireplumber`, `brightnessctl`, `playerctl`, `pavucontrol`,
+`wl-clipboard`, `cliphist`, `wireplumber`, `brightnessctl`, `playerctl`, `pavucontrol`, `python`,
 `bluez-utils`, `network-manager-applet`, `polkit-kde-agent`,
 `ttf-jetbrains-mono-nerd`, `mousepad`, `loupe`, `mpv`, and `evince`.
 
@@ -115,7 +119,7 @@ Full setup on a fresh Arch machine:
 # 1. Packages
 sudo pacman -S --needed hyprland hyprpaper hyprlock hyprswitch uwsm sddm \
   waybar swaync fastfetch rofi kitty thunar grim slurp wl-clipboard cliphist \
-  wireplumber brightnessctl playerctl pavucontrol bluez-utils \
+  wireplumber brightnessctl playerctl pavucontrol python bluez-utils \
   network-manager-applet polkit-kde-agent ttf-jetbrains-mono-nerd mousepad \
   loupe mpv evince papirus-icon-theme
 

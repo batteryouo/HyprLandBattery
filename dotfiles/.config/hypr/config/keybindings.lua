@@ -16,6 +16,11 @@ hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(options.fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(options.menu))
+_G.appLauncherClickBind = hl.bind("mouse:272", hl.dsp.exec_cmd("~/.config/hypr/scripts/app-launcher.sh click"), { non_consuming = true })
+local launcherPidFile = os.getenv("XDG_RUNTIME_DIR")
+local launcherPid = launcherPidFile and io.open(launcherPidFile .. "/hyprlandbattery-app-launcher.pid", "r")
+_G.appLauncherClickBind:set_enabled(launcherPid ~= nil)
+if launcherPid then launcherPid:close() end
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 

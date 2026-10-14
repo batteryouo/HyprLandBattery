@@ -30,6 +30,11 @@ hl.window_rule({
     opacity = "0.85 0.6",
 })
 
+hl.layer_rule({
+    match = { namespace = "^rofi$" },
+    animation = "slide left",
+})
+
 hl.config({
     layerrule = {
         { rule = "blur",       namespace = "swaync-notification-window" },

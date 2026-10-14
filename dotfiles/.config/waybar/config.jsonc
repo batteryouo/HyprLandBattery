@@ -13,7 +13,7 @@
   "custom/launcher": {
     "format": "󰣇",
     "tooltip-format": "App Launcher",
-    "on-click": "rofi -show drun"
+    "on-click": "~/.config/hypr/scripts/app-launcher.sh"
   },
 
   "hyprland/workspaces": {
