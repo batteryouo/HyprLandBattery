@@ -1,0 +1,98 @@
+(defvar calendar_open false)
+(defpoll panel_time :interval "10s" :run-while calendar_open :initial "--:--"
+  "date '+%H:%M'")
+(defpoll panel_date :interval "30s" :run-while calendar_open :initial ""
+  "LC_TIME=C date '+%A, %d %B %Y'")
+(defvar wifi_open false)
+(defvar wifi_busy false)
+(defvar wifi_notice "")
+(defpoll wifi_state :interval "10s" :run-while wifi_open
+  :initial "{\"available\":false,\"enabled\":false,\"connected\":false,\"title\":\"Loading Wi-Fi…\",\"detail\":\"Reading wireless status.\",\"networks\":[],\"empty\":\"Loading nearby networks…\"}"
+  "python3 ~/.config/eww/scripts/wifi.py status")
+
+(defwidget panel-heading [icon title subtitle close]
+  (box :class "panel-heading" :orientation "h" :space-evenly false :spacing 12
+    (label :class "panel-heading-icon" :text icon)
+    (box :orientation "v" :space-evenly false :hexpand true :spacing 3
+      (label :class "panel-title" :halign "start" :text title)
+      (label :class "panel-subtitle" :halign "start" :text subtitle))
+    (button :class "panel-close" :tooltip "Close" :timeout "5s" :onclick close "󰅖")))
+
+(defwidget calendar-card []
+  (box :class "desktop-card calendar-card" :orientation "v" :space-evenly false :spacing 8
+    (panel-heading :icon "󰃭" :title "Calendar" :subtitle "Date & time"
+      :close "python3 ~/.config/eww/scripts/panels.py close calendar-panel")
+    (box :class "calendar-clock" :orientation "v" :space-evenly false :spacing 2
+      (label :class "calendar-time" :text panel_time)
+      (label :class "calendar-date" :text panel_date))
+    (box :class "calendar-body" :orientation "v"
+      (calendar :class "month-calendar" :show-heading true :show-day-names true
+        :show-week-numbers false :show-details false))
+    (button :class "panel-secondary" :timeout "5s" :onclick "python3 ~/.config/eww/scripts/panels.py today calendar-panel"
+      "󰃶   Back to today")))
+
+(defwidget wifi-row [network]
+  (button :class "wifi-row ${network.active ? 'wifi-row-connected' : ''}"
+    :active {!wifi_busy && !network.active}
+    :tooltip {network.saved ? "Connect to this saved network" : "Open Wi-Fi setup to connect"}
+    :timeout "35s" :onclick "python3 ~/.config/eww/scripts/wifi.py connect '${network.token}'"
+    (box :orientation "h" :space-evenly false :spacing 12
+      (label :class "wifi-signal" :text {network.icon})
+      (box :orientation "v" :space-evenly false :hexpand true :spacing 4
+        (label :class "wifi-ssid" :halign "start" :limit-width 24 :text {network.ssid})
+        (label :class "panel-subtitle" :halign "start" :text {network.detail}))
+      (label :class "wifi-row-action" :text {network.action}))))
+
+(defwidget wifi-card []
+  (box :class "desktop-card wifi-card" :orientation "v" :space-evenly false :spacing 14
+    (panel-heading :icon "󰤨" :title "Wi-Fi" :subtitle "Your wireless connections"
+      :close "python3 ~/.config/eww/scripts/panels.py close wifi-panel")
+    (box :class "wifi-summary" :orientation "h" :space-evenly false :spacing 12
+      (box :orientation "v" :space-evenly false :hexpand true :spacing 5
+        (label :class "wifi-summary-title" :halign "start" :limit-width 24 :text {wifi_state.title})
+        (label :class "panel-subtitle" :halign "start" :limit-width 40 :wrap true :text {wifi_state.detail}))
+      (button :class "wifi-switch ${wifi_state.enabled ? 'wifi-switch-on' : ''}"
+        :active {wifi_state.available && !wifi_busy}
+        :timeout "15s" :onclick "python3 ~/.config/eww/scripts/wifi.py toggle"
+        {wifi_state.enabled ? "ON" : "OFF"}))
+    (box :orientation "h" :space-evenly false
+      (label :class "panel-section-title" :halign "start" :hexpand true :text "NEARBY NETWORKS")
+      (button :class "panel-small-button" :active {wifi_state.enabled && !wifi_busy}
+        :timeout "20s" :onclick "python3 ~/.config/eww/scripts/wifi.py scan"
+        {wifi_busy ? "Working…" : "󰑐  Scan"}))
+    (box :class "wifi-list" :orientation "v" :space-evenly false :spacing 6
+      (label :class "wifi-empty" :visible {arraylength(wifi_state.networks) == 0}
+        :wrap true :limit-width 36 :text {wifi_state.empty})
+      (for network in {wifi_state.networks}
+        (wifi-row :network network)))
+    (label :class "panel-notice" :visible {wifi_notice != ""} :wrap true
+      :limit-width 43 :halign "start" :text wifi_notice)
+    (button :class "panel-secondary" :active {!wifi_busy}
+      :timeout "5s" :onclick "python3 ~/.config/eww/scripts/wifi.py settings"
+      "󰒓   Network settings")))
+
+(defwindow calendar-panel
+  :monitor 0
+  :stacking "overlay"
+  :namespace "hyprlandbattery-calendar"
+  :exclusive false
+  :focusable false
+  :geometry (geometry :x "0px" :y "0px" :width "100%" :height "100%" :anchor "top left")
+  (overlay
+    (eventbox :timeout "5s" :onclick "python3 ~/.config/eww/scripts/panels.py close calendar-panel"
+      (box :hexpand true :vexpand true))
+    (box :class "desktop-card-position" :halign "center" :valign "start"
+      (calendar-card))))
+
+(defwindow wifi-panel
+  :monitor 0
+  :stacking "overlay"
+  :namespace "hyprlandbattery-wifi"
+  :exclusive false
+  :focusable false
+  :geometry (geometry :x "0px" :y "0px" :width "100%" :height "100%" :anchor "top left")
+  (overlay
+    (eventbox :timeout "5s" :onclick "python3 ~/.config/eww/scripts/panels.py close wifi-panel"
+      (box :hexpand true :vexpand true))
+    (box :class "desktop-card-position" :halign "end" :valign "start"
+      (wifi-card))))

@@ -30,9 +30,22 @@ hl.window_rule({
     opacity = "0.85 0.6",
 })
 
+hl.window_rule({
+    name = "wifi-authentication-dialog",
+    match = { title = "^Wi-Fi authentication$" },
+    float = true,
+    center = true,
+    size = "430 300",
+})
+
 hl.layer_rule({
     match = { namespace = "^rofi$" },
     animation = "slide left",
+})
+
+hl.layer_rule({
+    match = { namespace = "^hyprlandbattery-(quicksettings|calendar|wifi)$" },
+    animation = "slide top",
 })
 
 hl.config({

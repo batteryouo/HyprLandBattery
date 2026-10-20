@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 set -euo pipefail
-eww open --toggle quicksettings
+exec python3 "$(dirname "${BASH_SOURCE[0]}")/panels.py" toggle quicksettings

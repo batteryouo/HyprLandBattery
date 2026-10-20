@@ -88,15 +88,18 @@
     (notification-row)
     (power-row)))
 
+(include "panels.yuck")
+
 (defwindow quicksettings
   :monitor 0
   :windowtype "dialog"
   :stacking "overlay"
+  :namespace "hyprlandbattery-quicksettings"
   :exclusive false
   :focusable false
   :geometry (geometry :x "0px" :y "0px" :width "100%" :height "100%" :anchor "top left")
   (overlay
-    (eventbox :onclick "eww close quicksettings"
+    (eventbox :timeout "5s" :onclick "python3 ~/.config/eww/scripts/panels.py close quicksettings"
       (box :hexpand true :vexpand true))
     (box :class "qs-position" :halign "end" :valign "start"
       (quicksettings))))

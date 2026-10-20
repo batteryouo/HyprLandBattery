@@ -1,0 +1,96 @@
+.desktop-card-position {
+  margin: 10px 12px;
+}
+
+.desktop-card {
+  background: rgba(30, 30, 46, 0.97);
+  border: 1px solid rgba(137, 180, 250, 0.3);
+  border-radius: 18px;
+  padding: 18px;
+  color: $text;
+  font-size: 12px;
+  box-shadow: 0 4px 8px rgba(17, 17, 27, 0.35);
+}
+
+.calendar-card {
+  min-width: 205px;
+  padding: 11px;
+  font-size: 9px;
+}
+.wifi-card { min-width: 360px; }
+.panel-heading-icon { font-size: 24px; color: $blue; }
+.panel-title { font-size: 18px; font-weight: bold; }
+.panel-subtitle { font-size: 10px; color: $subtext; }
+.panel-section-title { font-size: 10px; color: $overlay; font-weight: bold; }
+
+.panel-close {
+  color: $subtext;
+  border-radius: 8px;
+  padding: 5px 8px;
+  font-size: 15px;
+}
+
+.panel-close:hover, .panel-small-button:hover {
+  background: $surface;
+  color: $text;
+}
+
+.calendar-clock {
+  background: linear-gradient(135deg, rgba(137, 180, 250, 0.14), rgba(203, 166, 247, 0.09));
+  border-radius: 12px;
+  padding: 8px 6px;
+}
+
+.calendar-time {
+  font-size: 25px;
+  font-weight: bold;
+  color: $blue;
+}
+
+.calendar-card .panel-heading { font-size: 9px; }
+.calendar-card .panel-heading-icon { font-size: 16px; }
+.calendar-card .panel-title { font-size: 12px; }
+.calendar-card .panel-subtitle { font-size: 8px; }
+.calendar-card .panel-close { padding: 2px 5px; font-size: 11px; }
+.calendar-card .panel-secondary { padding: 6px; font-size: 8px; }
+.calendar-date { color: $subtext; font-size: 8px; }
+.calendar-body { background: rgba(49, 50, 68, 0.35); border-radius: 8px; padding: 5px; }
+.month-calendar { padding: 1px; font-size: 9px; }
+.month-calendar.header { color: $mauve; font-weight: bold; }
+.month-calendar.button { color: $blue; }
+.month-calendar.highlight { color: $subtext; }
+.month-calendar:selected { background: $blue; color: $base; border-radius: 6px; }
+.month-calendar:indeterminate { color: $overlay; }
+
+.panel-secondary {
+  background: $surface;
+  color: $text;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 11px;
+}
+
+.panel-secondary:hover { background: rgba(137, 180, 250, 0.22); color: $blue; }
+.panel-secondary:disabled, .panel-small-button:disabled { color: $overlay; }
+.panel-small-button { color: $blue; border-radius: 6px; padding: 5px 8px; font-size: 10px; }
+.wifi-summary { background: rgba(166, 227, 161, 0.08); border-radius: 12px; padding: 14px; }
+.wifi-summary-title { font-size: 13px; font-weight: bold; color: $green; }
+.wifi-switch { background: $surface; color: $subtext; border-radius: 9px; padding: 7px 11px; font-size: 11px; }
+.wifi-switch-on { background: $green; color: $base; font-weight: bold; }
+.wifi-switch:disabled { opacity: 0.5; }
+
+.wifi-row {
+  background: rgba(49, 50, 68, 0.45);
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 11px 12px;
+}
+
+.wifi-row:hover { background: $surface; border-color: rgba(137, 180, 250, 0.3); }
+.wifi-row-connected { background: rgba(166, 227, 161, 0.06); border-color: rgba(166, 227, 161, 0.3); }
+.wifi-signal { font-size: 21px; color: $blue; }
+.wifi-row-connected .wifi-signal, .wifi-row-connected .wifi-row-action { color: $green; }
+.wifi-ssid { font-size: 12px; }
+.wifi-row-action { font-size: 10px; color: $blue; }
+.wifi-empty { color: $subtext; padding: 45px 10px; }
+.panel-notice { color: $peach; font-size: 10px; padding: 0 2px; }

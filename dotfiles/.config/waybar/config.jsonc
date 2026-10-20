@@ -27,8 +27,9 @@
   "clock": {
     "format": "{:%H:%M}",
     "format-alt": "{:%a, %d %b %Y}",
-    "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
-    "on-click": "mode"
+    "format-alt-click": 3,
+    "tooltip": false,
+    "on-click": "python3 ~/.config/eww/scripts/panels.py toggle calendar-panel"
   },
 
   "pulseaudio": {
@@ -48,7 +49,8 @@
     "format-disconnected": "󰖪  Offline",
     "tooltip-format-wifi": "{essid}\n{ipaddr}",
     "tooltip-format-ethernet": "{ifname}\n{ipaddr}",
-    "on-click": "nm-connection-editor"
+    "on-click": "python3 ~/.config/eww/scripts/panels.py toggle wifi-panel",
+    "on-click-right": "nm-connection-editor"
   },
 
   "battery": {

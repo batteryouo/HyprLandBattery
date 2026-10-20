@@ -40,7 +40,10 @@ REQUIRED_PACKAGES=(
   brightnessctl
   playerctl
   pavucontrol
+  python
+  python-gobject
   bluez-utils
+  networkmanager
   network-manager-applet
   polkit-kde-agent
   ttf-jetbrains-mono-nerd

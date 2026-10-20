@@ -27,7 +27,7 @@ dotfiles/.config/
 ├── rofi/                     # App launcher / dmenu (config.rasi + Catppuccin Mocha theme)
 ├── waybar/                   # Top status bar (config.jsonc + style.css)
 ├── swaync/                    # Notification daemon + control center (Catppuccin Mocha theme)
-├── eww/                      # Quick-settings panel (eww.yuck + eww.scss + scripts/)
+├── eww/                      # Quick settings, calendar and Wi-Fi cards
 ├── fastfetch/                # System info readout (config.jsonc + logo/)
 ├── gtk-3.0/settings.ini      # GTK3 app theme (Thunar, Mousepad, pavucontrol, ...)
 └── gtk-4.0/settings.ini      # GTK4 app theme
@@ -51,6 +51,14 @@ dotfiles/sddm/                # SDDM login screen theme (installed manually)
   media card, and Wi-Fi/Bluetooth/mic/speaker toggles. Notifications stay in
   swaync — the panel's DND and "Notifications Center" buttons drive
   `swaync-client` rather than reimplementing it.
+- **Calendar and Wi-Fi cards** (EWW): left-click the Waybar clock for a clock
+  and month calendar, or the network indicator for wireless status and nearby
+  networks. The calendar opens on today; "Back to today" resets browsing.
+  Connected and saved networks appear first. Saved networks connect directly;
+  "Set up" opens a themed GTK password dialog for new secured networks.
+  "Network settings" opens `nm-connection-editor`. Right-clicking the clock
+  changes its date format; right-clicking the network indicator opens settings.
+  The cards share the Catppuccin palette and slide down from the bar.
 - **App launcher**: `Super + R` or the Waybar icon toggles a searchable rofi menu
   below the left edge of the bar. Hyprland slides it in and out and closes it
   when clicking outside its bounds. The mouse binding is active only while the
@@ -99,8 +107,8 @@ This setup targets Arch Linux. The following packages are expected:
 
 `hyprland`, `hyprpaper`, `hyprlock`, `hyprswitch`, `uwsm`, `sddm`, `waybar`,
 `swaync`, `fastfetch`, `rofi`, `kitty`, `thunar`, `grim`, `slurp`,
-`wl-clipboard`, `cliphist`, `wireplumber`, `brightnessctl`, `playerctl`, `pavucontrol`, `python`,
-`bluez-utils`, `network-manager-applet`, `polkit-kde-agent`,
+`wl-clipboard`, `cliphist`, `wireplumber`, `brightnessctl`, `playerctl`, `pavucontrol`, `python`, `python-gobject`,
+`bluez-utils`, `networkmanager`, `network-manager-applet`, `polkit-kde-agent`,
 `ttf-jetbrains-mono-nerd`, `mousepad`, `loupe`, `mpv`, and `evince`.
 
 `papirus-icon-theme` is also expected (used for folder/app icons).
@@ -119,8 +127,8 @@ Full setup on a fresh Arch machine:
 # 1. Packages
 sudo pacman -S --needed hyprland hyprpaper hyprlock hyprswitch uwsm sddm \
   waybar swaync fastfetch rofi kitty thunar grim slurp wl-clipboard cliphist \
-  wireplumber brightnessctl playerctl pavucontrol python bluez-utils \
-  network-manager-applet polkit-kde-agent ttf-jetbrains-mono-nerd mousepad \
+  wireplumber brightnessctl playerctl pavucontrol python python-gobject bluez-utils \
+  networkmanager network-manager-applet polkit-kde-agent ttf-jetbrains-mono-nerd mousepad \
   loupe mpv evince papirus-icon-theme
 
 # 2. Dotfiles — symlinks hypr, waybar, swaync, fastfetch, rofi, eww, gtk-3.0
@@ -210,6 +218,14 @@ also installs a pacman hook that re-applies the theme after a
 - The EWW panel closes when clicking outside it. Its transparent full-screen
   click area consumes that outside click; click the underlying app again to
   interact with it.
+- Calendar, Wi-Fi and quick settings share `eww/scripts/panels.py`, which
+  serializes open/close requests and allows one of these panels at a time.
+  The new cards do not take keyboard focus. Wi-Fi status refreshes every ten
+  seconds while its panel is open, using cached scan results; the Scan button
+  requests a fresh scan. Secured networks use a focused GTK password dialog;
+  passwords are passed to `nmcli` over standard input instead of a shell command.
+  Connection failures appear in the dialog or card, and each action has a timeout.
+  Check the panel helpers with `python3 -B -m unittest discover -s tests`.
 - GTK/Qt theming covers classic GTK3 apps (Thunar, Mousepad, pavucontrol) and
   Qt apps (the polkit agent, via `QT_QPA_PLATFORMTHEME=gtk3`) fully. GTK4 apps
   built on libadwaita (e.g. Loupe) mostly ignore `gtk-theme-name` by design —
