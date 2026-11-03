@@ -98,6 +98,7 @@ dotfiles/sddm/                # SDDM login screen theme (installed manually)
 | `` Super + Shift + ` `` | Move window to special workspace "magic" |
 | `Super + mouse wheel` | Switch to adjacent workspace |
 | `Super + Tab` | Switch to the next empty workspace |
+| `Super + Shift + Tab` | Move the focused window to the next empty workspace |
 | `Ctrl + Alt + Left/Right` | Switch to adjacent workspace |
 | `Super + mouse drag / resize` | Drag or resize window with mouse |
 | Volume / brightness / media keys | Handled via `wpctl`, `brightnessctl`, `playerctl` |

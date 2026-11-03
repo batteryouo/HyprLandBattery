@@ -59,7 +59,7 @@ hl.bind(mainMod .. " + mouse_up",   hl.dsp.focus({ workspace = "e-1" }))
 hl.bind("CTRL + ALT + left",  hl.dsp.focus({ workspace = "e-1" }))
 hl.bind("CTRL + ALT + right", hl.dsp.focus({ workspace = "e+1" }))
 
-local function focusNextDynamicWorkspace()
+local function nextDynamicWorkspace()
     local firstDynamicWorkspace = 11
     local usedWorkspaces = {}
     for _, workspace in ipairs(hl.get_workspaces()) do
@@ -72,10 +72,15 @@ local function focusNextDynamicWorkspace()
     while usedWorkspaces[id] do
         id = id + 1
     end
-    hl.dispatch(hl.dsp.focus({ workspace = id }))
+    return id
 end
 
-hl.bind(mainMod .. " + TAB", focusNextDynamicWorkspace)
+hl.bind(mainMod .. " + TAB", function()
+    hl.dispatch(hl.dsp.focus({ workspace = nextDynamicWorkspace() }))
+end)
+hl.bind(mainMod .. " + SHIFT + TAB", function()
+    hl.dispatch(hl.dsp.window.move({ workspace = nextDynamicWorkspace() }))
+end)
 
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
