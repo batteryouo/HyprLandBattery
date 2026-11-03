@@ -42,7 +42,8 @@ dotfiles/sddm/                # SDDM login screen theme (installed manually)
   (Thunar, Mousepad, pavucontrol, ...) and Qt apps (the polkit agent) follow
   the same theme via `gtk-3.0`/`gtk-4.0` settings and `QT_QPA_PLATFORMTHEME`.
 - **Waybar modules**: workspaces, active window title, clock, volume, network,
-  battery, system tray, a pull-down shade button (left-click toggles the EWW
+  battery, a collapsible system tray opened from the ellipsis button, a
+  pull-down shade button (left-click toggles the EWW
   panel like `Super + N`, right-click toggles Do Not Disturb), and a power
   button (opens the same power menu as `Super + M`). The shade chevron doubles
   as the notification indicator: it tints when notifications are pending and

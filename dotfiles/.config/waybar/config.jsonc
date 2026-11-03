@@ -8,7 +8,7 @@
   "spacing": 0,
   "modules-left": ["custom/launcher", "hyprland/workspaces"],
   "modules-center": ["clock"],
-  "modules-right": ["pulseaudio", "network", "battery", "tray", "custom/quicksettings"],
+  "modules-right": ["pulseaudio", "network", "battery", "group/tray", "custom/quicksettings"],
 
   "custom/launcher": {
     "format": "󰣇",
@@ -65,6 +65,22 @@
     "format-alt": "{timeToEmpty}",
     "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
     "on-click": "mode"
+  },
+
+  "group/tray": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 180,
+      "children-class": "tray-drawer",
+      "transition-left-to-right": false,
+      "click-to-reveal": true
+    },
+    "modules": ["custom/tray-toggle", "tray"]
+  },
+
+  "custom/tray-toggle": {
+    "format": "󰇙",
+    "tooltip-format": "System tray"
   },
 
   "tray": {

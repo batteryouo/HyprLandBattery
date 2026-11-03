@@ -48,6 +48,7 @@ window#waybar {
 #network,
 #battery,
 #tray,
+#custom-tray-toggle,
 #custom-quicksettings {
   padding: 0 6px;
 }
@@ -58,6 +59,15 @@ window#waybar {
 #battery.warning { color: #fab387; }
 #battery.critical { color: #f38ba8; }
 #battery.charging { color: #a6e3a1; }
+
+#custom-tray-toggle {
+  color: #bac2de;
+  font-size: 14px;
+  padding: 0 4px 0 6px;
+  transition: color 0.15s ease;
+}
+
+#custom-tray-toggle:hover { color: #89b4fa; }
 
 #tray > .passive { -gtk-icon-effect: dim; }
 #tray > .needs-attention { -gtk-icon-effect: highlight; }
